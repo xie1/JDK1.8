@@ -41,24 +41,28 @@ package java.lang;
  * @see     java.lang.Number
  * @since   JDK1.1
  */
+
 public final class Byte extends Number implements Comparable<Byte> {
 
     /**
      * A constant holding the minimum value a {@code byte} can
      * have, -2<sup>7</sup>.
      */
+//    最小值是-128,即是-2^7
     public static final byte   MIN_VALUE = -128;
 
     /**
      * A constant holding the maximum value a {@code byte} can
      * have, 2<sup>7</sup>-1.
      */
+//    最大值是127,即是2^7-1
     public static final byte   MAX_VALUE = 127;
 
     /**
      * The {@code Class} instance representing the primitive type
      * {@code byte}.
      */
+//    动态获取byte的类的类型
     @SuppressWarnings("unchecked")
     public static final Class<Byte>     TYPE = (Class<Byte>) Class.getPrimitiveClass("byte");
 
@@ -84,6 +88,7 @@ public final class Byte extends Number implements Comparable<Byte> {
                 cache[i] = new Byte((byte)(i - 128));
         }
     }
+
 
     /**
      * Returns a {@code Byte} instance representing the specified
