@@ -52,6 +52,10 @@ package java.lang;
  * @jls 5.1.3 Narrowing Primitive Conversions
  * @since   JDK1.0
  */
+//抽象类Number是原始基本的数据类型(byte,short,int,long,float,double)的超类
+//特殊语义转换
+//对于平台的类型，经常可以类似的进行窄化原始类型或者宽化的原始类型的转换，相关定义都有java语言平台
+//对于原始基本类型的之间转换，同时会伴随类型数值大小的丢失，可能会丢失精度，返回一个不同于输入的结果
 public abstract class Number implements java.io.Serializable {
     /**
      * Returns the value of the specified number as an {@code int},
@@ -60,6 +64,8 @@ public abstract class Number implements java.io.Serializable {
      * @return  the numeric value represented by this object after conversion
      *          to type {@code int}.
      */
+//    抽象方法，返回一个特定的完整或者被截断整型值
+//    返回的数值表示是这个转换成整型的类型
     public abstract int intValue();
 
     /**
@@ -69,6 +75,7 @@ public abstract class Number implements java.io.Serializable {
      * @return  the numeric value represented by this object after conversion
      *          to type {@code long}.
      */
+
     public abstract long longValue();
 
     /**
@@ -100,6 +107,7 @@ public abstract class Number implements java.io.Serializable {
      *          to type {@code byte}.
      * @since   JDK1.1
      */
+//    会通过调用intValue()方法之后，再对值进行的强制转型byte
     public byte byteValue() {
         return (byte)intValue();
     }
@@ -115,6 +123,7 @@ public abstract class Number implements java.io.Serializable {
      *          to type {@code short}.
      * @since   JDK1.1
      */
+//    会通过调用intValue()方法之后，再对值进行的强制转型成short
     public short shortValue() {
         return (short)intValue();
     }
