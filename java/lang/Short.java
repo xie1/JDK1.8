@@ -40,24 +40,29 @@ package java.lang;
  * @see     java.lang.Number
  * @since   JDK1.1
  */
+//     Short类是基本类型short的包装类
+//     Short类具有一个单一的属性
 public final class Short extends Number implements Comparable<Short> {
 
     /**
      * A constant holding the minimum value a {@code short} can
      * have, -2<sup>15</sup>.
      */
+//    最小值-32768,-2^15
     public static final short   MIN_VALUE = -32768;
 
     /**
      * A constant holding the maximum value a {@code short} can
      * have, 2<sup>15</sup>-1.
      */
+//    最大值32767,2^15-1
     public static final short   MAX_VALUE = 32767;
 
     /**
      * The {@code Class} instance representing the primitive type
      * {@code short}.
      */
+//    动态获取一个short的类型
     @SuppressWarnings("unchecked")
     public static final Class<Short>    TYPE = (Class<Short>) Class.getPrimitiveClass("short");
 
@@ -69,6 +74,8 @@ public final class Short extends Number implements Comparable<Short> {
      * @return the string representation of the specified {@code short}
      * @see java.lang.Integer#toString(int)
      */
+//    返回short的字符串
+//    假设基数是10
     public static String toString(short s) {
         return Integer.toString((int)s, 10);
     }
@@ -169,6 +176,7 @@ public final class Short extends Number implements Comparable<Short> {
      * @throws          NumberFormatException If the {@code String} does
      *                  not contain a parsable {@code short}.
      */
+//
     public static Short valueOf(String s, int radix)
         throws NumberFormatException {
         return valueOf(parseShort(s, radix));
