@@ -120,6 +120,8 @@ public final class Short extends Number implements Comparable<Short> {
      * @throws          NumberFormatException If the {@code String}
      *                  does not contain a parsable {@code short}.
      */
+//  先调用Integer.parseInt方法，把字符串转成整型
+//   之后在进行强转
     public static short parseShort(String s, int radix)
         throws NumberFormatException {
         int i = Integer.parseInt(s, radix);
@@ -147,6 +149,7 @@ public final class Short extends Number implements Comparable<Short> {
      * @throws  NumberFormatException If the string does not
      *          contain a parsable {@code short}.
      */
+//    String类型转换成short类型
     public static short parseShort(String s) throws NumberFormatException {
         return parseShort(s, 10);
     }
@@ -176,7 +179,10 @@ public final class Short extends Number implements Comparable<Short> {
      * @throws          NumberFormatException If the {@code String} does
      *                  not contain a parsable {@code short}.
      */
-//
+//  返回一个Short对象，当用第二个参数给出的基数进行解析时，持有从指定的字符串中提取的值
+//  第一个参数被解释为在第二个参数指定的基数中表示一个签名的short，就像把参数交给
+//  parseShort（java.lang一样。字符串,int)}的方法。
+//  其结果是一个Short对象，它表示由字符串指定的 Short value。
     public static Short valueOf(String s, int radix)
         throws NumberFormatException {
         return valueOf(parseShort(s, radix));
@@ -204,15 +210,18 @@ public final class Short extends Number implements Comparable<Short> {
      * @throws  NumberFormatException If the {@code String} does
      *          not contain a parsable {@code short}.
      */
+
     public static Short valueOf(String s) throws NumberFormatException {
         return valueOf(s, 10);
     }
 
+//  静态缓存类
     private static class ShortCache {
+//       私用构造器
         private ShortCache(){}
-
+//      缓存数组大小
         static final Short cache[] = new Short[-(-128) + 127 + 1];
-
+//        开始缓存数组值大小
         static {
             for(int i = 0; i < cache.length; i++)
                 cache[i] = new Short((short)(i - 128));
@@ -235,6 +244,9 @@ public final class Short extends Number implements Comparable<Short> {
      * @return a {@code Short} instance representing {@code s}.
      * @since  1.5
      */
+//    返回一个表示特定short值的Short对象
+//    该方法在性能上优于构造器方法
+//    该方法使用了缓存
     public static Short valueOf(short s) {
         final int offset = 128;
         int sAsInt = s;
@@ -286,6 +298,7 @@ public final class Short extends Number implements Comparable<Short> {
      *            contain a parsable {@code short}.
      * @see java.lang.Short#parseShort(java.lang.String, int)
      */
+//   对字符串进行编码，返回相应的Short对象
     public static Short decode(String nm) throws NumberFormatException {
         int i = Integer.decode(nm);
         if (i < MIN_VALUE || i > MAX_VALUE)
@@ -299,6 +312,7 @@ public final class Short extends Number implements Comparable<Short> {
      *
      * @serial
      */
+//    定义个short常量，值为0
     private final short value;
 
     /**
@@ -308,6 +322,7 @@ public final class Short extends Number implements Comparable<Short> {
      * @param value     the value to be represented by the
      *                  {@code Short}.
      */
+//    Short的构造器
     public Short(short value) {
         this.value = value;
     }
@@ -325,6 +340,7 @@ public final class Short extends Number implements Comparable<Short> {
      *          does not contain a parsable {@code short}.
      * @see     java.lang.Short#parseShort(java.lang.String, int)
      */
+//    构造器方法，接受字符串参数。通过调用parseShort返回值
     public Short(String s) throws NumberFormatException {
         this.value = parseShort(s, 10);
     }
@@ -334,6 +350,7 @@ public final class Short extends Number implements Comparable<Short> {
      * a narrowing primitive conversion.
      * @jls 5.1.3 Narrowing Primitive Conversions
      */
+//    窄化
     public byte byteValue() {
         return (byte)value;
     }
@@ -351,6 +368,7 @@ public final class Short extends Number implements Comparable<Short> {
      * a widening primitive conversion.
      * @jls 5.1.2 Widening Primitive Conversions
      */
+//    宽化基本类型，返回整型
     public int intValue() {
         return (int)value;
     }
@@ -392,6 +410,7 @@ public final class Short extends Number implements Comparable<Short> {
      * @return  a string representation of the value of this object in
      *          base&nbsp;10.
      */
+//    调用Integer的toString方法
     public String toString() {
         return Integer.toString((int)value);
     }
@@ -402,6 +421,7 @@ public final class Short extends Number implements Comparable<Short> {
      *
      * @return a hash code value for this {@code Short}
      */
+//    调用Short对象的hashCode方法
     @Override
     public int hashCode() {
         return Short.hashCode(value);
@@ -415,6 +435,7 @@ public final class Short extends Number implements Comparable<Short> {
      * @return a hash code value for a {@code short} value.
      * @since 1.8
      */
+//  返回short的整数
     public static int hashCode(short value) {
         return (int)value;
     }
@@ -429,6 +450,7 @@ public final class Short extends Number implements Comparable<Short> {
      * @return          {@code true} if the objects are the same;
      *                  {@code false} otherwise.
      */
+//    如果包含相等的值，返回true
     public boolean equals(Object obj) {
         if (obj instanceof Short) {
             return value == ((Short)obj).shortValue();
@@ -449,6 +471,8 @@ public final class Short extends Number implements Comparable<Short> {
      *           comparison).
      * @since   1.2
      */
+
+//  调用Short的静态compare方法
     public int compareTo(Short anotherShort) {
         return compare(this.value, anotherShort.value);
     }
@@ -467,6 +491,7 @@ public final class Short extends Number implements Comparable<Short> {
      *         a value greater than {@code 0} if {@code x > y}
      * @since 1.7
      */
+//  2个大小的比较
     public static int compare(short x, short y) {
         return x - y;
     }
@@ -476,6 +501,8 @@ public final class Short extends Number implements Comparable<Short> {
      * complement binary form.
      * @since 1.5
      */
+
+//  定义一个size为16的常量
     public static final int SIZE = 16;
 
     /**
@@ -484,6 +511,7 @@ public final class Short extends Number implements Comparable<Short> {
      *
      * @since 1.8
      */
+
     public static final int BYTES = SIZE / Byte.SIZE;
 
     /**
@@ -495,6 +523,7 @@ public final class Short extends Number implements Comparable<Short> {
      *     the bytes in the specified {@code short} value.
      * @since 1.5
      */
+//  进行反转后进行补码处理
     public static short reverseBytes(short i) {
         return (short) (((i & 0xFF00) >> 8) | (i << 8));
     }
@@ -516,6 +545,7 @@ public final class Short extends Number implements Comparable<Short> {
      *         conversion
      * @since 1.8
      */
+//    转换成无符号的整型
     public static int toUnsignedInt(short x) {
         return ((int) x) & 0xffff;
     }
@@ -536,10 +566,13 @@ public final class Short extends Number implements Comparable<Short> {
      *         conversion
      * @since 1.8
      */
+//    转换成无符号的长整型
     public static long toUnsignedLong(short x) {
         return ((long) x) & 0xffffL;
     }
 
+
+//    序列化id
     /** use serialVersionUID from JDK 1.1. for interoperability */
     private static final long serialVersionUID = 7515723908773894738L;
 }
