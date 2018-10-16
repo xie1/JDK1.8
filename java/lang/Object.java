@@ -29,7 +29,7 @@ package java.lang;
  */
 
 /**
- * Class {@code Object} is the root of the class hierarchy.
+ * Class {@code Object} is the root of the class hierarchy(等级制度).
  * Every class has {@code Object} as a superclass. All objects,
  * including arrays, implement the methods of this class.
  *
@@ -39,6 +39,12 @@ package java.lang;
  */
 public class Object {
 
+    /**
+     * 1、私用静态本地的注册方法，有存在什么用？
+     * 2、为什么怎么写？
+     * 3、静态方法先执行，还是静态模块先执行？
+     * 4、涉及到JVM虚拟机加载类的过程，先后顺序？
+     */
     private static native void registerNatives();
     static {
         registerNatives();
@@ -47,9 +53,9 @@ public class Object {
     /**
      * Returns the runtime class of this {@code Object}. The returned
      * {@code Class} object is the object that is locked by {@code
-     * static synchronized} methods of the represented class.
+     * static synchronized} methods of the represented（代表） class.
      *
-     * <p><b>The actual result type is {@code Class<? extends |X|>}
+     * <p><b>The actual（实际） result type is {@code Class<? extends |X|>}
      * where {@code |X|} is the erasure of the static type of the
      * expression on which {@code getClass} is called.</b> For
      * example, no cast is required in this code fragment:</p>
@@ -60,21 +66,21 @@ public class Object {
      * </p>
      *
      * @return The {@code Class} object that represents the runtime
-     *         class of this object.
+     *         class of this object.（代表的是运行的时的class）
      * @jls 15.8.2 Class Literals
      */
     public final native Class<?> getClass();
 
     /**
      * Returns a hash code value for the object. This method is
-     * supported for the benefit of hash tables such as those provided by
+     * supported for the benefit（有利于） of hash tables such as those provided by
      * {@link java.util.HashMap}.
      * <p>
-     * The general contract of {@code hashCode} is:
+     * The general（一般） contract of {@code hashCode} is:
      * <ul>
-     * <li>Whenever it is invoked on the same object more than once during
+     * <li>Whenever it is invoked（调用） on the same object more than once during
      *     an execution of a Java application, the {@code hashCode} method
-     *     must consistently return the same integer, provided no information
+     *     must consistently（保持一致） return the same integer, provided no information
      *     used in {@code equals} comparisons on the object is modified.
      *     This integer need not remain consistent from one execution of an
      *     application to another execution of the same application.
@@ -84,14 +90,14 @@ public class Object {
      * <li>It is <em>not</em> required that if two objects are unequal
      *     according to the {@link java.lang.Object#equals(java.lang.Object)}
      *     method, then calling the {@code hashCode} method on each of the
-     *     two objects must produce distinct integer results.  However, the
+     *     two objects must produce distinct（不同） integer results.  However, the
      *     programmer should be aware that producing distinct integer results
      *     for unequal objects may improve the performance of hash tables.
      * </ul>
      * <p>
-     * As much as is reasonably practical, the hashCode method defined by
+     * As much as is reasonably practical（实际）, the hashCode method defined by
      * class {@code Object} does return distinct integers for distinct
-     * objects. (This is typically implemented by converting the internal
+     * objects. (This is typically implemented by converting（转化） the internal
      * address of the object into an integer, but this implementation
      * technique is not required by the
      * Java&trade; programming language.)
@@ -103,12 +109,12 @@ public class Object {
     public native int hashCode();
 
     /**
-     * Indicates whether some other object is "equal to" this one.
+     * Indicates（表明） whether some other object is "equal to" this one.
      * <p>
      * The {@code equals} method implements an equivalence relation
-     * on non-null object references:
+     * on non-null object references（）:
      * <ul>
-     * <li>It is <i>reflexive</i>: for any non-null reference value
+     * <li>It is <i>reflexive（自反性）</i>: for any non-null reference value
      *     {@code x}, {@code x.equals(x)} should return
      *     {@code true}.
      * <li>It is <i>symmetric</i>: for any non-null reference values
@@ -453,7 +459,7 @@ public class Object {
 
         if (nanos < 0 || nanos > 999999) {
             throw new IllegalArgumentException(
-                                "nanosecond timeout value out of range");
+                    "nanosecond timeout value out of range");
         }
 
         if (nanos > 0) {
