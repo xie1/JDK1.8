@@ -116,9 +116,9 @@ public class Object {
      *     {@code y.equals(z)} returns {@code true}, then
      *     {@code x.equals(z)} should return {@code true}.
      * <li>It is <i>consistent（一致性）</i>: for any non-null reference values
-     *     {@code x} and {@code y}, multiple invocations of
+     *     {@code x} and {@code y}, multiple invocations(多次调用) of
      *     {@code x.equals(y)} consistently return {@code true}
-     *     or consistently return {@code false}, provided no
+     *     or consistently return {@code false}, provided（假如） no
      *     information used in {@code equals} comparisons on the
      *     objects is modified.
      * <li>For any non-null reference value {@code x},
