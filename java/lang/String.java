@@ -41,16 +41,16 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * The {@code String} class represents character strings. All
- * string literals in Java programs, such as {@code "abc"}, are
+ * string literals(字符常量) in Java programs, such as {@code "abc"}, are
  * implemented as instances of this class.
  * <p>
  * Strings are constant; their values cannot be changed after they
- * are created. String buffers support mutable strings.
+ * are created. String buffers support mutable（可变的） strings.
  * Because String objects are immutable they can be shared. For example:
  * <blockquote><pre>
  *     String str = "abc";
  * </pre></blockquote><p>
- * is equivalent to:
+ * is equivalent（等价于） to:
  * <blockquote><pre>
  *     char data[] = {'a', 'b', 'c'};
  *     String str = new String(data);
@@ -65,20 +65,20 @@ import java.util.regex.PatternSyntaxException;
  * </pre></blockquote>
  * <p>
  * The class {@code String} includes methods for examining
- * individual characters of the sequence, for comparing strings, for
- * searching strings, for extracting substrings, and for creating a
+ * individual characters of the sequence（字符的排序）, for comparing strings, for
+ * searching strings, for extracting substrings（提取字符串）, and for creating a
  * copy of a string with all characters translated to uppercase or to
  * lowercase. Case mapping is based on the Unicode Standard version
  * specified by the {@link java.lang.Character Character} class.
  * <p>
  * The Java language provides special support for the string
- * concatenation operator (&nbsp;+&nbsp;), and for conversion of
+ * concatenation operator （串联操作）(&nbsp;+&nbsp;), and for conversion of
  * other objects to strings. String concatenation is implemented
  * through the {@code StringBuilder}(or {@code StringBuffer})
- * class and its {@code append} method.
+ * class and its {@code append} method（通过StringBuilder和StringBuffer的append方法实现字符串的拼接）.
  * String conversions are implemented through the method
  * {@code toString}, defined by {@code Object} and
- * inherited by all classes in Java. For additional information on
+ * inherited（继承） by all classes in Java. For additional information on
  * string concatenation and conversion, see Gosling, Joy, and Steele,
  * <i>The Java Language Specification</i>.
  *
@@ -91,7 +91,7 @@ import java.util.regex.PatternSyntaxException;
  * pairs</em> (see the section <a href="Character.html#unicode">Unicode
  * Character Representations</a> in the {@code Character} class for
  * more information).
- * Index values refer to {@code char} code units, so a supplementary
+ * Index values refer to {@code char} code units（单位）, so a supplementary
  * character uses two positions in a {@code String}.
  * <p>The {@code String} class provides methods for dealing with
  * Unicode code points (i.e., characters), in addition to those for
@@ -111,6 +111,7 @@ import java.util.regex.PatternSyntaxException;
 public final class String
     implements java.io.Serializable, Comparable<String>, CharSequence {
     /** The value is used for character storage. */
+    //定义final字符数组
     private final char value[];
 
     /** Cache the hash code for the string */
@@ -120,11 +121,11 @@ public final class String
     private static final long serialVersionUID = -6849794470754667710L;
 
     /**
-     * Class String is special cased within the Serialization Stream Protocol.
+     * Class String is special cased within（包装） the Serialization Stream Protocol.
      *
      * A String instance is written into an ObjectOutputStream according to
      * <a href="{@docRoot}/../platform/serialization/spec/output.html">
-     * Object Serialization Specification, Section 6.2, "Stream Elements"</a>
+     * Object Serialization Specification（说明）, Section 6.2, "Stream Elements"</a>
      */
     private static final ObjectStreamField[] serialPersistentFields =
         new ObjectStreamField[0];
@@ -132,7 +133,7 @@ public final class String
     /**
      * Initializes a newly created {@code String} object so that it represents
      * an empty character sequence.  Note that use of this constructor is
-     * unnecessary since Strings are immutable.
+     * unnecessary since Strings are immutable（不可变）.
      */
     public String() {
         this.value = "".value;
@@ -142,22 +143,26 @@ public final class String
      * Initializes a newly created {@code String} object so that it represents
      * the same sequence of characters as the argument; in other words, the
      * newly created string is a copy of the argument string. Unless an
-     * explicit copy of {@code original} is needed, use of this constructor is
+     * explicit（明确的） copy of {@code original(原始的)} is needed, use of this constructor is
      * unnecessary since Strings are immutable.
      *
      * @param  original
      *         A {@code String}
      */
     public String(String original) {
+        //值的为原始的值
         this.value = original.value;
+        // hash的值
         this.hash = original.hash;
     }
 
     /**
-     * Allocates a new {@code String} so that it represents the sequence of
+     * Allocates（分配） a new {@code String} so that it represents the sequence of
      * characters currently contained in the character array argument. The
-     * contents of the character array are copied; subsequent modification of
+     * contents of the character array are copied; subsequent（后面的） modification of
      * the character array does not affect the newly created string.
+     *
+     * 后面字符数组的修改不会影响新的字符串创建
      *
      * @param  value
      *         The initial value of the string
@@ -167,8 +172,8 @@ public final class String
     }
 
     /**
-     * Allocates a new {@code String} that contains characters from a subarray
-     * of the character array argument. The {@code offset} argument is the
+     * Allocates a new {@code String} that contains characters from a subarray（子数组）
+     * of the character array argument. The {@code offset} argument（参数） is the
      * index of the first character of the subarray and the {@code count}
      * argument specifies the length of the subarray. The contents of the
      * subarray are copied; subsequent modification of the character array does
@@ -187,7 +192,7 @@ public final class String
      *          If the {@code offset} and {@code count} arguments index
      *          characters outside the bounds of the {@code value} array
      */
-    public String(char value[], int offset, int count) {
+    public String(char[] value, int offset, int count) {
         if (offset < 0) {
             throw new StringIndexOutOfBoundsException(offset);
         }
@@ -195,6 +200,7 @@ public final class String
             if (count < 0) {
                 throw new StringIndexOutOfBoundsException(count);
             }
+            //当count为0
             if (offset <= value.length) {
                 this.value = "".value;
                 return;
@@ -204,6 +210,7 @@ public final class String
         if (offset > value.length - count) {
             throw new StringIndexOutOfBoundsException(offset + count);
         }
+        //调用数组的复制方法，生成新的字符串
         this.value = Arrays.copyOfRange(value, offset, offset+count);
     }
 
@@ -211,8 +218,9 @@ public final class String
      * Allocates a new {@code String} that contains characters from a subarray
      * of the <a href="Character.html#unicode">Unicode code point</a> array
      * argument.  The {@code offset} argument is the index of the first code
-     * point of the subarray and the {@code count} argument specifies the
-     * length of the subarray.  The contents of the subarray are converted to
+     * point of the subarray（子串的起始位置）
+     * and the {@code count} argument specifies the length of the subarray（取的子串长度）
+     * The contents of the subarray are converted to
      * {@code char}s; subsequent modification of the {@code int} array does not
      * affect the newly created string.
      *
@@ -272,6 +280,7 @@ public final class String
         for (int i = offset, j = 0; i < end; i++, j++) {
             int c = codePoints[i];
             if (Character.isBmpCodePoint(c))
+                //强转之后出现乱码？
                 v[j] = (char)c;
             else
                 Character.toSurrogates(c, v, j++);
