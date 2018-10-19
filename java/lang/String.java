@@ -279,11 +279,14 @@ public final class String
 
         for (int i = offset, j = 0; i < end; i++, j++) {
             int c = codePoints[i];
-            if (Character.isBmpCodePoint(c))
+            if (Character.isBmpCodePoint(c)){
                 //强转之后出现乱码？
+                //重新赋值新数组
                 v[j] = (char)c;
-            else
+
+            } else{
                 Character.toSurrogates(c, v, j++);
+            }
         }
 
         this.value = v;
@@ -299,8 +302,9 @@ public final class String
      *
      * <p> Each {@code byte} in the subarray is converted to a {@code char} as
      * specified in the method above.
+     * 每个字节会变转化成char
      *
-     * @deprecated This method does not properly convert bytes into characters.
+     * @deprecated This method does not properly（不适合） convert bytes into characters.
      * As of JDK&nbsp;1.1, the preferred way to do this is via the
      * {@code String} constructors that take a {@link
      * java.nio.charset.Charset}, charset name, or that use the platform's
@@ -328,8 +332,10 @@ public final class String
      * @see  #String(byte[], java.nio.charset.Charset)
      * @see  #String(byte[])
      */
+    //废弃
     @Deprecated
     public String(byte ascii[], int hibyte, int offset, int count) {
+        //公共效验方法，向上抛出异常
         checkBounds(ascii, offset, count);
         char value[] = new char[count];
 
@@ -381,7 +387,7 @@ public final class String
         this(ascii, hibyte, 0, ascii.length);
     }
 
-    /* Common private utility method used to bounds check the byte array
+    /* Common private utility(实用) method used to bounds check the byte array
      * and requested offset & length values used by the String(byte[],..)
      * constructors.
      */
