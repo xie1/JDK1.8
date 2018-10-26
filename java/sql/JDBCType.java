@@ -33,6 +33,7 @@ package java.sql;
  */
 public enum JDBCType implements SQLType {
 
+
     /**
      * Identifies the generic SQL type {@code BIT}.
      */

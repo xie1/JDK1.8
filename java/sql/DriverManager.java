@@ -697,6 +697,7 @@ public class DriverManager {
  * to avoid the capture of the Driver it being compared to as it might not
  * normally have access.
  */
+
 class DriverInfo {
 
     final Driver driver;

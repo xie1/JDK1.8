@@ -45,6 +45,7 @@ public interface DriverAction {
      * Method called by
      * {@linkplain DriverManager#deregisterDriver(Driver) }
      *  to notify the JDBC driver that it was de-registered.
+     *  当驱动注册之后，将会通知驱动类
      * <p>
      * The {@code deregister} method is intended only to be used by JDBC Drivers
      * and not by applications.  JDBC drivers are recommended to not implement

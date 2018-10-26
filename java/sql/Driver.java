@@ -39,7 +39,7 @@ import java.util.logging.Logger;
  * driver in turn to try to connect to the target URL.
  *
  * <P>It is strongly recommended that each Driver class should be
- * small and standalone so that the Driver class can be loaded and
+ * small and standalone(独立) so that the Driver class can be loaded and
  * queried without bringing in vast quantities of supporting code.
  *
  * <P>When a Driver class is loaded, it should create an instance of

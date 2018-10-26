@@ -221,6 +221,7 @@ public interface Connection  extends Wrapper, AutoCloseable {
      */
     void setAutoCommit(boolean autoCommit) throws SQLException;
 
+
     /**
      * Retrieves the current auto-commit mode for this <code>Connection</code>
      * object.

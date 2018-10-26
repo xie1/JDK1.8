@@ -32,6 +32,7 @@ package java.sql;
  */
 public interface SQLType {
 
+
     /**
      * Returns the {@code SQLType} name that represents a SQL data type.
      *
