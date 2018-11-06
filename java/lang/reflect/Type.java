@@ -27,8 +27,8 @@ package java.lang.reflect;
 
 /**
  * Type is the common superinterface for all types in the Java
- * programming language. These include raw types, parameterized types,
- * array types, type variables and primitive types.
+ * programming language. These include raw types, parameterized(参数) types,
+ * array types（数组）, type variables（类型变量） and primitive types（原始的）.
  *
  * @since 1.5
  */
