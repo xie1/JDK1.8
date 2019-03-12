@@ -8,5 +8,6 @@ public class TestString {
 //        char[] c = {'a','c','d'};
         int[] num = {1, 2, 3};
         System.out.println(new String(num, 1, 2));
+        System.out.println(Integer.valueOf(num[1]));
     }
 }

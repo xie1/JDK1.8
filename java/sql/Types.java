@@ -26,7 +26,9 @@
 package java.sql;
 
 /**
- * <P>The class that defines the constants that are used to identify generic
+ *
+ * 定义了JDBC类型
+ * <P>The class that defines the constants that are used to identify generic（基本）
  * SQL types, called JDBC types.
  * <p>
  * This class is never instantiated.
