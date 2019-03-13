@@ -73,6 +73,7 @@ public class Object {
      *     used in {@code equals} comparisons on the object is modified.
      *     This integer need not remain consistent from one execution of an
      *     application to another execution of the same application.
+     *     两个对象调用equal方法，返回的结果相同时，那么两个对象的hashcode也会相同
      * <li>If two objects are equal according to the {@code equals(Object)}
      *     method, then calling the {@code hashCode} method on each of
      *     the two objects must produce the same integer result.
@@ -85,7 +86,7 @@ public class Object {
      * </ul>
      * <p>
      * As much as is reasonably practical（实际）, the hashCode method defined by
-     * class {@code Object} does return distinct integers for distinct
+     * class {@code Object} does return distinct（不同） integers for distinct
      * objects. (This is typically implemented by converting（转化） the internal
      * address of the object into an integer, but this implementation
      * technique is not required by the
@@ -154,6 +155,7 @@ public class Object {
      * intent（意图） is that, for any object {@code x}, the expression:
      * <blockquote>
      * <pre>
+     *  x的clone()不等于x是返回true,x.clone().getClass() == x.getClass()返回true
      * x.clone() != x</pre></blockquote>
      * will be true, and that the expression:
      * <blockquote>
@@ -217,7 +219,7 @@ public class Object {
     protected native Object clone() throws CloneNotSupportedException;
 
     /**
-     * Returns a string representation of the object. In general, the
+     * Returns a string representation(表达形式) of the object. In general, the
      * {@code toString} method returns a string that
      * "textually represents（文本表示）" this object. The result should
      * be a concise（简明的） but informative representation that is easy for a
@@ -271,6 +273,7 @@ public class Object {
      * <p>
      * Only one thread at a time can own an object's monitor（具有一个线程一次获取对象的监视器）.
      *
+     * 即获取对象监视器之后，才可以进行执行加锁的代码块，
      * @throws  IllegalMonitorStateException  if the current thread is not
      *               the owner of this object's monitor.
      * @see        java.lang.Object#notifyAll()
@@ -348,6 +351,7 @@ public class Object {
      * thread {@code T} is exactly as it was when the {@code wait} method
      * was invoked.
      * <p>
+     *     通过while循环进行假的唤醒等待的线程（实际上是没有唤醒）
      * A thread can also wake up without being notified, interrupted, or
      * timing out, a so-called <i>spurious wakeup（假的唤醒）</i>.  While this will rarely
      * occur in practice, applications must guard against it by testing for
@@ -369,7 +373,7 @@ public class Object {
      * <p>If the current thread is {@linkplain java.lang.Thread#interrupt()
      * interrupted} by any thread before or while it is waiting, then an
      * {@code InterruptedException} is thrown.  This exception is not
-     * thrown until the lock status of this object has been restored as
+     * thrown until the lock status of this object has been restored（修复） as
      * described above.
      *
      * <p>
@@ -388,6 +392,7 @@ public class Object {
      *               negative（负数）.
      * @throws  IllegalMonitorStateException  if the current thread is not
      *               the owner of the object's monitor.
+     *              当前的线程不属于自己的对象监视器
      * @throws  InterruptedException if any thread interrupted the
      *             current thread before or while the current thread
      *             was waiting for a notification.  The <i>interrupted
@@ -491,7 +496,7 @@ public class Object {
      * {@code notifyAll} method. The thread then waits until it can
      * re-obtain ownership of the monitor and resumes execution.
      * <p>
-     * As in the one argument version, interrupts and spurious wakeups are
+     * As in the one argument version（争议版本）, interrupts and spurious wakeups are
      * possible, and this method should always be used in a loop:
      * <pre>
      *     synchronized (obj) {
@@ -524,8 +529,10 @@ public class Object {
      * determines that there are no more references to the object.
      * A subclass overrides the {@code finalize} method to dispose of
      * system resources or to perform （处理）other cleanup.
+     *
+     * 子类通过实现此方法，处理系统资源或相应的处理
      * <p>
-     * The general contract of {@code finalize} is that it is invoked
+     * The general contract of {@code finalize} is that it is invoked（被调用）
      * if and when the Java&trade; virtual
      * machine has determined that there is no longer any
      * means by which this object can be accessed by any thread that has
@@ -545,7 +552,7 @@ public class Object {
      * <p>
      * The Java programming language does not guarantee（保证） which thread will
      * invoke the {@code finalize} method for any given object. It is
-     * guaranteed, however, that the thread that invokes finalize will not
+     * guaranteed（保证）, however, that the thread that invokes finalize will not
      * be holding any user-visible synchronization locks when finalize is
      * invoked. If an uncaught exception is thrown by the finalize method,
      * the exception is ignored and finalization of that object terminates.

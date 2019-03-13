@@ -87,11 +87,11 @@ import java.util.regex.PatternSyntaxException;
  * thrown.
  *
  * <p>A {@code String} represents a string in the UTF-16 format
- * in which <em>supplementary characters</em> are represented by <em>surrogate
+ * in which <em>supplementary characters</em> are represented by <em>surrogate(替代)
  * pairs</em> (see the section <a href="Character.html#unicode">Unicode
  * Character Representations</a> in the {@code Character} class for
  * more information).
- * Index values refer to {@code char} code units（单位）, so a supplementary
+ * Index values refer to {@code char} code units（单位）, so a supplementary（补充）
  * character uses two positions in a {@code String}.
  * <p>The {@code String} class provides methods for dealing with
  * Unicode code points (i.e., characters), in addition to those for
@@ -136,6 +136,7 @@ public final class String
      * unnecessary since Strings are immutable（不可变）.
      */
     public String() {
+        // value是final字符数组
         this.value = "".value;
     }
 
@@ -144,7 +145,7 @@ public final class String
      * the same sequence of characters as the argument; in other words, the
      * newly created string is a copy of the argument string. Unless an
      * explicit（明确的） copy of {@code original(原始的)} is needed, use of this constructor is
-     * unnecessary since Strings are immutable.
+     * unnecessary since Strings are immutable（不可变）.
      *
      * @param  original
      *         A {@code String}
