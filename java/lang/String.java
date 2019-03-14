@@ -402,7 +402,7 @@ public final class String
     }
 
     /**
-     * Constructs a new {@code String} by decoding the specified subarray of
+     * Constructs a new {@code String} by decoding(解码)  the specified(特定) subarray of
      * bytes using the specified charset.  The length of the new {@code String}
      * is a function of the charset, and hence may not be equal to the length
      * of the subarray.
@@ -413,7 +413,7 @@ public final class String
      * over the decoding process is required.
      *
      * @param  bytes
-     *         The bytes to be decoded into characters
+     *         The bytes to be decoded（解码） into characters
      *
      * @param  offset
      *         The index of the first byte to decode
@@ -423,7 +423,7 @@ public final class String
 
      * @param  charsetName
      *         The name of a supported {@linkplain java.nio.charset.Charset
-     *         charset}
+     *         charset}z
      *
      * @throws  UnsupportedEncodingException
      *          If the named charset is not supported
@@ -475,7 +475,9 @@ public final class String
     public String(byte bytes[], int offset, int length, Charset charset) {
         if (charset == null)
             throw new NullPointerException("charset");
+        // 校验对参数的检查
         checkBounds(bytes, offset, length);
+        // 对输入的字节数组进行解码
         this.value =  StringCoding.decode(charset, bytes, offset, length);
     }
 
@@ -504,12 +506,14 @@ public final class String
      */
     public String(byte bytes[], String charsetName)
             throws UnsupportedEncodingException {
+        // 调用上面的方法
         this(bytes, 0, bytes.length, charsetName);
     }
 
     /**
      * Constructs a new {@code String} by decoding the specified array of
      * bytes using the specified {@linkplain java.nio.charset.Charset charset}.
+     * 通过用特定的字符形式对特定的数组进行解码形成特定字符串
      * The length of the new {@code String} is a function of the charset, and
      * hence may not be equal to the length of the byte array.
      *
@@ -520,6 +524,7 @@ public final class String
      *
      * @param  bytes
      *         The bytes to be decoded into characters
+     *         需要被解码成字符
      *
      * @param  charset
      *         The {@linkplain java.nio.charset.Charset charset} to be used to
@@ -533,7 +538,7 @@ public final class String
 
     /**
      * Constructs a new {@code String} by decoding the specified subarray of
-     * bytes using the platform's default charset.  The length of the new
+     * bytes using the platform's default charset(默认平台的字符编码格式).  The length of the new
      * {@code String} is a function of the charset, and hence may not be equal
      * to the length of the subarray.
      *
@@ -559,13 +564,14 @@ public final class String
      */
     public String(byte bytes[], int offset, int length) {
         checkBounds(bytes, offset, length);
+        // 平台默认的编码
         this.value = StringCoding.decode(bytes, offset, length);
     }
 
     /**
-     * Constructs a new {@code String} by decoding the specified array of bytes
+     * Constructs a new {@code String} by decoding（解码） the specified array of bytes
      * using the platform's default charset.  The length of the new {@code
-     * String} is a function of the charset, and hence may not be equal to the
+     * String} is a function of the charset（一个新的字符函数）, and hence may not be equal to the
      * length of the byte array.
      *
      * <p> The behavior of this constructor when the given bytes are not valid
@@ -583,8 +589,8 @@ public final class String
     }
 
     /**
-     * Allocates a new string that contains the sequence of characters
-     * currently contained in the string buffer argument. The contents of the
+     * Allocates(分配) a new string that contains the sequence of characters
+     * currently contained in the string buffer argument（StringBuffer的字符）. The contents of the
      * string buffer are copied; subsequent modification of the string buffer
      * does not affect the newly created string.
      *
@@ -592,7 +598,9 @@ public final class String
      *         A {@code StringBuffer}
      */
     public String(StringBuffer buffer) {
+        //线程是安全的，有加锁
         synchronized(buffer) {
+            // 调用的数组的方法
             this.value = Arrays.copyOf(buffer.getValue(), buffer.length());
         }
     }
@@ -603,10 +611,11 @@ public final class String
      * string builder are copied; subsequent modification of the string builder
      * does not affect the newly created string.
      *
-     * <p> This constructor is provided to ease migration to {@code
+     * <p> This constructor is provided to ease migration（轻松移动） to {@code
      * StringBuilder}. Obtaining a string from a string builder via the {@code
      * toString} method is likely to run faster and is generally preferred.
      *
+     * 通过将StringBuilder转成String更快
      * @param   builder
      *          A {@code StringBuilder}
      *
@@ -619,7 +628,7 @@ public final class String
     /*
     * Package private constructor which shares value array for speed.
     * this constructor is always expected to be called with share==true.
-    * a separate constructor is needed because we already have a public
+    * a separate（分开） constructor is needed because we already have a public
     * String(char[]) constructor that makes a copy of the given char[].
     */
     String(char[] value, boolean share) {
@@ -656,7 +665,8 @@ public final class String
      * specified index. An index ranges from {@code 0} to
      * {@code length() - 1}. The first {@code char} value of the sequence
      * is at index {@code 0}, the next at index {@code 1},
-     * and so on, as for array indexing.
+     * and so on, as for array indexing .
+     * 类似于数组的计算（第一位是0，最后一位是 length() - 1）
      *
      * <p>If the {@code char} value specified by the index is a
      * <a href="Character.html#unicode">surrogate</a>, the surrogate
@@ -666,7 +676,7 @@ public final class String
      * @return     the {@code char} value at the specified index of this string.
      *             The first {@code char} value is at index {@code 0}.
      * @exception  IndexOutOfBoundsException  if the {@code index}
-     *             argument is negative or not less than the length of this
+     *             argument is negative（负数） or not less than the length of this
      *             string.
      */
     public char charAt(int index) {
@@ -681,6 +691,8 @@ public final class String
      * index. The index refers to {@code char} values
      * (Unicode code units) and ranges from {@code 0} to
      * {@link #length()}{@code  - 1}.
+     *
+     * 返回字符的Ascill编码值
      *
      * <p> If the {@code char} value specified at the given index
      * is in the high-surrogate range, the following index is less
@@ -707,17 +719,17 @@ public final class String
 
     /**
      * Returns the character (Unicode code point) before the specified
-     * index. The index refers to {@code char} values
+     * index(前一位). The index refers to {@code char} values
      * (Unicode code units) and ranges from {@code 1} to {@link
      * CharSequence#length() length}.
-     *
+     *  长度是从1开始的到字符串的最长度
      * <p> If the {@code char} value at {@code (index - 1)}
      * is in the low-surrogate range, {@code (index - 2)} is not
      * negative, and the {@code char} value at {@code (index -
      * 2)} is in the high-surrogate range, then the
      * supplementary code point value of the surrogate pair is
      * returned. If the {@code char} value at {@code index -
-     * 1} is an unpaired low-surrogate or a high-surrogate, the
+     * 1} is an unpaired low-surrogate（低位） or a high-surrogate（高位）, the
      * surrogate value is returned.
      *
      * @param     index the index following the code point that should be returned
@@ -794,6 +806,7 @@ public final class String
     /**
      * Copy characters from this string into dst starting at dstBegin.
      * This method doesn't perform any range checking.
+     * 不再执行范围内的检查
      */
     void getChars(char dst[], int dstBegin) {
         System.arraycopy(value, 0, dst, dstBegin, value.length);
@@ -909,9 +922,9 @@ public final class String
     }
 
     /**
-     * Encodes this {@code String} into a sequence of bytes using the named
+     * Encodes(编码) this {@code String} into a sequence of bytes using the named
      * charset, storing the result into a new byte array.
-     *
+     *  采用给定的字符进行编码
      * <p> The behavior of this method when this string cannot be encoded in
      * the given charset is unspecified.  The {@link
      * java.nio.charset.CharsetEncoder} class should be used when more control
@@ -954,6 +967,7 @@ public final class String
      */
     public byte[] getBytes(Charset charset) {
         if (charset == null) throw new NullPointerException();
+        // 传入参数主要是是Charset类
         return StringCoding.encode(charset, value, 0, value.length);
     }
 
@@ -961,6 +975,7 @@ public final class String
      * Encodes this {@code String} into a sequence of bytes using the
      * platform's default charset, storing the result into a new byte array.
      *
+     * 通过用平台默认的字符集把字符串编码成一段有序的字节
      * <p> The behavior of this method when this string cannot be encoded in
      * the default charset is unspecified.  The {@link
      * java.nio.charset.CharsetEncoder} class should be used when more control
@@ -977,7 +992,7 @@ public final class String
     /**
      * Compares this string to the specified object.  The result is {@code
      * true} if and only if the argument is not {@code null} and is a {@code
-     * String} object that represents the same sequence of characters as this
+     * String} object that represents the same sequence of characters(一段连续字符) as this
      * object.
      *
      * @param  anObject
@@ -990,12 +1005,14 @@ public final class String
      * @see  #equalsIgnoreCase(String)
      */
     public boolean equals(Object anObject) {
+        // 对象
         if (this == anObject) {
             return true;
         }
         if (anObject instanceof String) {
             String anotherString = (String)anObject;
             int n = value.length;
+            // 默认的数量相同
             if (n == anotherString.value.length) {
                 char v1[] = value;
                 char v2[] = anotherString.value;
@@ -1027,10 +1044,13 @@ public final class String
      * @since  1.4
      */
     public boolean contentEquals(StringBuffer sb) {
+        //StringBuffer 转成CharSequence
         return contentEquals((CharSequence)sb);
     }
 
+    // 没有加锁的比较
     private boolean nonSyncContentEquals(AbstractStringBuilder sb) {
+        // 定义两个字符数组,比较原始字符串和
         char v1[] = value;
         char v2[] = sb.getValue();
         int n = v1.length;
@@ -1065,6 +1085,7 @@ public final class String
         // Argument is a StringBuffer, StringBuilder
         if (cs instanceof AbstractStringBuilder) {
             if (cs instanceof StringBuffer) {
+                // 加锁保证线程安全
                 synchronized(cs) {
                    return nonSyncContentEquals((AbstractStringBuilder)cs);
                 }
@@ -1091,9 +1112,9 @@ public final class String
     }
 
     /**
-     * Compares this {@code String} to another {@code String}, ignoring case
+     * Compares this {@code String} to another {@code String}, ignoring（忽略） case
      * considerations.  Two strings are considered equal ignoring case if they
-     * are of the same length and corresponding characters in the two strings
+     * are of the same length and corresponding（一致的） characters in the two strings
      * are equal ignoring case.
      *
      * <p> Two characters {@code c1} and {@code c2} are considered the same
@@ -1119,6 +1140,7 @@ public final class String
      * @see  #equals(Object)
      */
     public boolean equalsIgnoreCase(String anotherString) {
+        // 三则表达试，层层关联全都为true
         return (this == anotherString) ? true
                 : (anotherString != null)
                 && (anotherString.value.length == value.length)
@@ -1126,21 +1148,21 @@ public final class String
     }
 
     /**
-     * Compares two strings lexicographically.
+     * Compares two strings lexicographically（字典序列）.
      * The comparison is based on the Unicode value of each character in
      * the strings. The character sequence represented by this
      * {@code String} object is compared lexicographically to the
-     * character sequence represented by the argument string. The result is
+     * character sequence represented by the argument string（参数字符）. The result is
      * a negative integer if this {@code String} object
-     * lexicographically precedes the argument string. The result is a
+     * lexicographically precedes（在什么之前） the argument string. The result is a
      * positive integer if this {@code String} object lexicographically
-     * follows the argument string. The result is zero if the strings
+     * follows(在参数字符串后) the argument string. The result is zero if the strings
      * are equal; {@code compareTo} returns {@code 0} exactly when
      * the {@link #equals(Object)} method would return {@code true}.
      * <p>
      * This is the definition of lexicographic ordering. If two strings are
      * different, then either they have different characters at some index
-     * that is a valid index for both strings, or their lengths are different,
+     * that is a valid index for both strings（存在字母序列的不同）, or their lengths are different,
      * or both. If they have different characters at one or more index
      * positions, let <i>k</i> be the smallest such index; then the string
      * whose character at position <i>k</i> has the smaller value, as
@@ -1149,6 +1171,7 @@ public final class String
      * difference of the two character values at position {@code k} in
      * the two string -- that is, the value:
      * <blockquote><pre>
+     *     每个单个字符进行比较
      * this.charAt(k)-anotherString.charAt(k)
      * </pre></blockquote>
      * If there is no index position at which they differ, then the shorter
@@ -1156,6 +1179,7 @@ public final class String
      * {@code compareTo} returns the difference of the lengths of the
      * strings -- that is, the value:
      * <blockquote><pre>
+     *     相同短的字符串领先于长的字符串
      * this.length()-anotherString.length()
      * </pre></blockquote>
      *
@@ -1169,7 +1193,9 @@ public final class String
     public int compareTo(String anotherString) {
         int len1 = value.length;
         int len2 = anotherString.value.length;
+        // 获取两个长度的最短值
         int lim = Math.min(len1, len2);
+        // 定义两个数组进行存储字符串
         char v1[] = value;
         char v2[] = anotherString.value;
 
@@ -1187,9 +1213,11 @@ public final class String
 
     /**
      * A Comparator that orders {@code String} objects as by
-     * {@code compareToIgnoreCase}. This comparator is serializable.
+     * {@code compareToIgnoreCase}.
+     * This comparator is serializable.
+     * 这个比较是可序列化
      * <p>
-     * Note that this Comparator does <em>not</em> take locale into account,
+     * Note that this Comparator（比较器） does <em>not</em> take locale into account,
      * and will result in an unsatisfactory ordering for certain locales.
      * The java.text package provides <em>Collators</em> to allow
      * locale-sensitive ordering.
@@ -1197,6 +1225,7 @@ public final class String
      * @see     java.text.Collator#compare(String, String)
      * @since   1.2
      */
+    // 单例模式
     public static final Comparator<String> CASE_INSENSITIVE_ORDER
                                          = new CaseInsensitiveComparator();
     private static class CaseInsensitiveComparator
@@ -1232,13 +1261,14 @@ public final class String
     }
 
     /**
-     * Compares two strings lexicographically, ignoring case
+     * Compares two strings lexicographically（字母表）, ignoring case
      * differences. This method returns an integer whose sign is that of
      * calling {@code compareTo} with normalized versions of the strings
-     * where case differences have been eliminated by calling
+     * where case differences have been eliminated（消除） by calling
      * {@code Character.toLowerCase(Character.toUpperCase(character))} on
      * each character.
      * <p>
+     *     没有考虑局部变量
      * Note that this method does <em>not</em> take locale into account,
      * and will result in an unsatisfactory ordering for certain locales.
      * The java.text package provides <em>collators</em> to allow
@@ -1256,7 +1286,7 @@ public final class String
     }
 
     /**
-     * Tests if two string regions are equal.
+     * Tests if two string regions（局域） are equal.
      * <p>
      * A substring of this {@code String} object is compared to a substring
      * of the argument other. The result is true if these substrings
