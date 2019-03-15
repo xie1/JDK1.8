@@ -1290,7 +1290,7 @@ public final class String
      * <p>
      * A substring of this {@code String} object is compared to a substring
      * of the argument other. The result is true if these substrings
-     * represent identical character sequences. The substring of this
+     * represent identical character sequences（完全相同序列）. The substring of this
      * {@code String} object to be compared begins at index {@code toffset}
      * and has length {@code len}. The substring of other to be compared
      * begins at index {@code ooffset} and has length {@code len}. The
@@ -1317,8 +1317,8 @@ public final class String
      *          exactly matches the specified subregion of the string argument;
      *          {@code false} otherwise.
      */
-    public boolean regionMatches(int toffset, String other, int ooffset,
-            int len) {
+    //字符串局域的比较，源字符串的部分子串与目标子串的比较
+    public boolean regionMatches(int toffset, String other, int ooffset, int len) {
         char ta[] = value;
         int to = toffset;
         char pa[] = other.value;
@@ -1345,8 +1345,9 @@ public final class String
      * substrings represent character sequences that are the same, ignoring
      * case if and only if {@code ignoreCase} is true. The substring of
      * this {@code String} object to be compared begins at index
-     * {@code toffset} and has length {@code len}. The substring of
-     * {@code other} to be compared begins at index {@code ooffset} and
+     * {@code toffset} and has length {@code len}.
+     * 源字符串的长度从（toffset到字符串的全部的长度）
+     * The substring of{@code other} to be compared begins at index {@code ooffset} and
      * has length {@code len}. The result is {@code false} if and only if
      * at least one of the following is true:
      * <ul><li>{@code toffset} is negative.
@@ -1405,6 +1406,7 @@ public final class String
             if (c1 == c2) {
                 continue;
             }
+            // 如果为true需要转换大写
             if (ignoreCase) {
                 // If characters don't match but case may be ignored,
                 // try converting both characters to uppercase.
@@ -1464,7 +1466,7 @@ public final class String
     }
 
     /**
-     * Tests if this string starts with the specified prefix.
+     * Tests if this string starts with the specified prefix(前缀).
      *
      * @param   prefix   the prefix.
      * @return  {@code true} if the character sequence represented by the
@@ -1477,12 +1479,13 @@ public final class String
      * @since   1. 0
      */
     public boolean startsWith(String prefix) {
+        // 调用
         return startsWith(prefix, 0);
     }
 
     /**
      * Tests if this string ends with the specified suffix.
-     *
+     *  测试参数str是否是源字符串的末尾字符串
      * @param   suffix   the suffix.
      * @return  {@code true} if the character sequence represented by the
      *          argument is a suffix of the character sequence represented by
@@ -1492,18 +1495,19 @@ public final class String
      *          as determined by the {@link #equals(Object)} method.
      */
     public boolean endsWith(String suffix) {
+        // 起始是总数-所需字符串的数量
         return startsWith(suffix, value.length - suffix.value.length);
     }
 
     /**
      * Returns a hash code for this string. The hash code for a
-     * {@code String} object is computed as
+     * {@code String} object is computed（计算） as
      * <blockquote><pre>
      * s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
      * </pre></blockquote>
      * using {@code int} arithmetic, where {@code s[i]} is the
      * <i>i</i>th character of the string, {@code n} is the length of
-     * the string, and {@code ^} indicates exponentiation.
+     * the string, and {@code ^} indicates exponentiation（取幂）.
      * (The hash value of the empty string is zero.)
      *
      * @return  a hash code value for this object.
@@ -1522,6 +1526,7 @@ public final class String
     }
 
     /**
+     * 返回指定字符在字符串中第一次出现处的索引，如果此字符串中没有这样的字符，则返回 -1。
      * Returns the index within this string of the first occurrence of
      * the specified character. If a character with value
      * {@code ch} occurs in the character sequence represented by
@@ -1550,6 +1555,7 @@ public final class String
     }
 
     /**
+     * 返回从 fromIndex 位置开始查找指定字符在字符串中第一次出现处的索引，如果此字符串中没有这样的字符，则返回 -1
      * Returns the index within this string of the first occurrence of the
      * specified character, starting the search at the specified index.
      * <p>
@@ -1590,18 +1596,20 @@ public final class String
      */
     public int indexOf(int ch, int fromIndex) {
         final int max = value.length;
+        // 对字符起始位置的判断
         if (fromIndex < 0) {
             fromIndex = 0;
         } else if (fromIndex >= max) {
             // Note: fromIndex might be near -1>>>1.
             return -1;
         }
-
+        //32
         if (ch < Character.MIN_SUPPLEMENTARY_CODE_POINT) {
             // handle most cases here (ch is a BMP code point or a
             // negative value (invalid code point))
             final char[] value = this.value;
             for (int i = fromIndex; i < max; i++) {
+                //判断如果它们的值相等，即返回索引的位置
                 if (value[i] == ch) {
                     return i;
                 }
@@ -1617,6 +1625,7 @@ public final class String
      */
     private int indexOfSupplementary(int ch, int fromIndex) {
         if (Character.isValidCodePoint(ch)) {
+            // 为什么局部变量都定义成final类型
             final char[] value = this.value;
             final char hi = Character.highSurrogate(ch);
             final char lo = Character.lowSurrogate(ch);
@@ -1631,6 +1640,7 @@ public final class String
     }
 
     /**
+     * 返回字符最后出现的索引
      * Returns the index within this string of the last occurrence of
      * the specified character. For values of {@code ch} in the
      * range from 0 to 0xFFFF (inclusive), the index (in Unicode code
@@ -1680,7 +1690,7 @@ public final class String
      *
      * @param   ch          a character (Unicode code point).
      * @param   fromIndex   the index to start the search from. There is no
-     *          restriction on the value of {@code fromIndex}. If it is
+     *          restriction（约束） on the value of {@code fromIndex}. If it is
      *          greater than or equal to the length of this string, it has
      *          the same effect as if it were equal to one less than the
      *          length of this string: this entire string may be searched.
@@ -1697,6 +1707,7 @@ public final class String
             // negative value (invalid code point))
             final char[] value = this.value;
             int i = Math.min(fromIndex, value.length - 1);
+            // 递减
             for (; i >= 0; i--) {
                 if (value[i] == ch) {
                     return i;
@@ -1745,6 +1756,7 @@ public final class String
     }
 
     /**
+     * 解释：返回索引值
      * Returns the index within this string of the first occurrence of the
      * specified substring, starting at the specified index.
      *
@@ -1766,7 +1778,7 @@ public final class String
     }
 
     /**
-     * Code shared by String and AbstractStringBuilder to do searches. The
+     * Code shared（共享） by String and AbstractStringBuilder to do searches. The
      * source is the character array being searched, and the target
      * is the string being searched for.
      *
@@ -1778,6 +1790,7 @@ public final class String
      */
     static int indexOf(char[] source, int sourceOffset, int sourceCount,
             String target, int fromIndex) {
+        // 命名
         return indexOf(source, sourceOffset, sourceCount,
                        target.value, 0, target.value.length,
                        fromIndex);
@@ -1835,6 +1848,7 @@ public final class String
     }
 
     /**
+     * 这个字符最后源字符串最后出现的索引
      * Returns the index within this string of the last occurrence of the
      * specified substring.  The last occurrence of the empty string ""
      * is considered to occur at the index value {@code this.length()}.
@@ -1924,6 +1938,7 @@ public final class String
             return fromIndex;
         }
 
+//        最后字符串的最后起始
         int strLastIndex = targetOffset + targetCount - 1;
         char strLastChar = target[strLastIndex];
         int min = sourceOffset + targetCount - 1;
@@ -1952,6 +1967,8 @@ public final class String
     }
 
     /**
+     *
+     * 切割字符串，从开始的指定的索引开始
      * Returns a string that is a substring of this string. The
      * substring begins with the character at the specified index and
      * extends to the end of this string. <p>
@@ -1991,8 +2008,8 @@ public final class String
      * "smiles".substring(1, 5) returns "mile"
      * </pre></blockquote>
      *
-     * @param      beginIndex   the beginning index, inclusive.
-     * @param      endIndex     the ending index, exclusive.
+     * @param      beginIndex   the beginning index, inclusive（包含）.
+     * @param      endIndex     the ending index, exclusive（不包含）.
      * @return     the specified substring.
      * @exception  IndexOutOfBoundsException  if the
      *             {@code beginIndex} is negative, or
@@ -2017,6 +2034,7 @@ public final class String
     }
 
     /**
+     * 返回一个字符序列
      * Returns a character sequence that is a subsequence of this sequence.
      *
      * <p> An invocation of this method of the form
@@ -2050,7 +2068,7 @@ public final class String
     }
 
     /**
-     * Concatenates the specified string to the end of this string.
+     * Concatenates（链接） the specified string to the end of this string.
      * <p>
      * If the length of the argument string is {@code 0}, then this
      * {@code String} object is returned. Otherwise, a
@@ -2075,7 +2093,9 @@ public final class String
             return this;
         }
         int len = value.length;
+        // 创建一个新的字符数组
         char buf[] = Arrays.copyOf(value, len + otherLen);
+        // 复制
         str.getChars(buf, len);
         return new String(buf, true);
     }
@@ -2087,8 +2107,9 @@ public final class String
      * If the character {@code oldChar} does not occur in the
      * character sequence represented by this {@code String} object,
      * then a reference to this {@code String} object is returned.
+     * 如果需要替换的源字符不存在，则替换失败返回
      * Otherwise, a {@code String} object is returned that
-     * represents a character sequence identical to the character sequence
+     * represents a character sequence identical(同一) to the character sequence
      * represented by this {@code String} object, except that every
      * occurrence of {@code oldChar} is replaced by an occurrence
      * of {@code newChar}.
@@ -2120,6 +2141,7 @@ public final class String
                     break;
                 }
             }
+            // 采用的数据结构,数组
             if (i < len) {
                 char buf[] = new char[len];
                 for (int j = 0; j < i; j++) {
@@ -2140,7 +2162,7 @@ public final class String
      * Tells whether or not this string matches the given <a
      * href="../util/regex/Pattern.html#sum">regular expression</a>.
      *
-     * <p> An invocation of this method of the form
+     * <p> An invocation(调用) of this method of the form
      * <i>str</i>{@code .matches(}<i>regex</i>{@code )} yields exactly the
      * same result as the expression
      *
@@ -2170,6 +2192,8 @@ public final class String
     /**
      * Returns true if and only if this string contains the specified
      * sequence of char values.
+     *
+     * 包含特定的字符序列
      *
      * @param s the sequence to search for
      * @return true if this string contains {@code s}, false otherwise
@@ -2359,6 +2383,7 @@ public final class String
      *         the delimiting regular expression
      *
      * @param  limit
+     *         划分结果的份数
      *         the result threshold, as described above
      *
      * @return  the array of strings computed by splitting this string
@@ -2469,7 +2494,8 @@ public final class String
     }
 
     /**
-     * Returns a new String composed of copies of the
+     * 已给定的字符进行把字符串进行组成
+     * Returns a new String composed(组成) of copies of the
      * {@code CharSequence elements} joined together with a copy of
      * the specified {@code delimiter}.
      *
@@ -2494,6 +2520,7 @@ public final class String
      * @since 1.8
      */
     public static String join(CharSequence delimiter, CharSequence... elements) {
+        // 对参数进行非空的校验
         Objects.requireNonNull(delimiter);
         Objects.requireNonNull(elements);
         // Number of elements not likely worth Arrays.stream overhead.
@@ -2553,6 +2580,8 @@ public final class String
     }
 
     /**
+     *
+     * 转为小写
      * Converts all of the characters in this {@code String} to lower
      * case using the rules of the given {@code Locale}.  Case mapping is based
      * on the Unicode Standard version specified by the {@link java.lang.Character Character}
@@ -2695,7 +2724,7 @@ public final class String
 
     /**
      * Converts all of the characters in this {@code String} to lower
-     * case using the rules of the default locale. This is equivalent to calling
+     * case using the rules of the default locale(局域). This is equivalent to calling
      * {@code toLowerCase(Locale.getDefault())}.
      * <p>
      * <b>Note:</b> This method is locale sensitive, and may produce unexpected
@@ -2880,8 +2909,10 @@ public final class String
     }
 
     /**
+     *
+     * 去除首尾的空格
      * Returns a string whose value is this string, with any leading and trailing
-     * whitespace removed.
+     * whitespace（空格） removed.
      * <p>
      * If this {@code String} object represents an empty character
      * sequence, or the first and last characters of character sequence
@@ -3028,6 +3059,7 @@ public final class String
     }
 
     /**
+     * 转换成String类型的
      * Returns the string representation of the {@code Object} argument.
      *
      * @param   obj   an {@code Object}.
@@ -3050,6 +3082,7 @@ public final class String
      * @return  a {@code String} that contains the characters of the
      *          character array.
      */
+//    通过调用String的静态方法，方法内再进行构造器的处理
     public static String valueOf(char data[]) {
         return new String(data);
     }
@@ -3188,7 +3221,20 @@ public final class String
     }
 
     /**
-     * Returns a canonical representation for the string object.
+     * 返回字符串对象的规范化表示形式、
+     *
+     *
+     *
+     * 一个初始时为空的字符串池，它由类 String 私有地维护。
+     *
+     * 当调用 intern 方法时，如果池已经包含一个等于此 String 对象的字符串（该对象由 equals(Object) 方法确定），则返回池中的字符串。否则，将此 String 对象添加到池中，并且返回此 String 对象的引用。
+     *
+     * 它遵循对于任何两个字符串 s 和 t，当且仅当 s.equals(t) 为 true 时，s.intern() == t.intern() 才为 true。
+     *
+     * 所有字面值字符串和字符串赋值常量表达式都是内部的
+     *
+     *
+     * Returns a canonical（典型的） representation for the string object.
      * <p>
      * A pool of strings, initially empty, is maintained privately by the
      * class {@code String}.
@@ -3209,6 +3255,7 @@ public final class String
      *
      * @return  a string that has the same contents as this string, but is
      *          guaranteed to be from a pool of unique strings.
+     *          一个字符串，内容与此字符串相同，但它保证来自字符串池中
      */
     public native String intern();
 }
