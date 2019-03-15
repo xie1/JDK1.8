@@ -29,10 +29,10 @@ import sun.misc.FloatingDecimal;
 import java.util.Arrays;
 
 /**
- * A mutable sequence of characters.
+ * A mutable(易变的) sequence of characters.
  * <p>
  * Implements a modifiable string. At any point in time it contains some
- * particular sequence of characters, but the length and content of the
+ * particular sequence of characters（特殊字符序列）, but the length and content of the
  * sequence can be changed through certain method calls.
  *
  * <p>Unless otherwise noted, passing a {@code null} argument to a constructor
@@ -46,7 +46,7 @@ import java.util.Arrays;
  */
 abstract class AbstractStringBuilder implements Appendable, CharSequence {
     /**
-     * The value is used for character storage.
+     * The value is used for character storage（存储）.
      */
     char[] value;
 
@@ -56,13 +56,14 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     int count;
 
     /**
-     * This no-arg constructor is necessary for serialization of subclasses.
+     * This no-arg constructor is necessary for serialization of subclasses（序列化子类）.
      */
+//    无参构造器
     AbstractStringBuilder() {
     }
 
     /**
-     * Creates an AbstractStringBuilder of the specified capacity.
+     * Creates an AbstractStringBuilder of the specified capacity(容量).
      */
     AbstractStringBuilder(int capacity) {
         value = new char[capacity];
@@ -71,6 +72,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     /**
      * Returns the length (character count).
      *
+     * 返回字符序列的长度
      * @return  the length of the sequence of characters currently
      *          represented by this object
      */
@@ -83,7 +85,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * Returns the current capacity. The capacity is the amount of storage
      * available for newly inserted characters, beyond which an allocation
      * will occur.
-     *
+     * 返回当前的容量。可以继续插入字符的容量，超过当前的
      * @return  the current capacity
      */
     public int capacity() {
@@ -93,10 +95,10 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     /**
      * Ensures that the capacity is at least equal to the specified minimum.
      * If the current capacity is less than the argument, then a new internal
-     * array is allocated with greater capacity. The new capacity is the
+     * array（新的内部数组） is allocated（分配） with greater capacity. The new capacity is the
      * larger of:
      * <ul>
-     * <li>The {@code minimumCapacity} argument.
+     * <li>The {@code minimumCapacity（最小电容）} argument.
      * <li>Twice the old capacity, plus {@code 2}.
      * </ul>
      * If the {@code minimumCapacity} argument is nonpositive, this
@@ -116,7 +118,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * behaves like {@code ensureCapacity}, however it is never
      * synchronized.
      * If {@code minimumCapacity} is non positive due to numeric
-     * overflow, this method throws {@code OutOfMemoryError}.
+     * overflow(溢出), this method throws {@code OutOfMemoryError}.
      */
     private void ensureCapacityInternal(int minimumCapacity) {
         // overflow-conscious code
