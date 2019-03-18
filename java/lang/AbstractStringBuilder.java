@@ -43,6 +43,8 @@ import java.util.Arrays;
  * @author      Martin Buchholz
  * @author      Ulf Zibis
  * @since       1.5
+ *
+ * 默认的类型
  */
 abstract class AbstractStringBuilder implements Appendable, CharSequence {
     /**
@@ -110,10 +112,12 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      */
     public void ensureCapacity(int minimumCapacity) {
         if (minimumCapacity > 0)
+            // 继续调用私用方法
             ensureCapacityInternal(minimumCapacity);
     }
 
     /**
+     * 堆内存不足
      * For positive values of {@code minimumCapacity}, this method
      * behaves like {@code ensureCapacity}, however it is never
      * synchronized.
@@ -130,9 +134,10 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
 
     /**
      * The maximum size of array to allocate (unless necessary).
-     * Some VMs reserve some header words in an array.
+     * Some VMs reserve（预备） some header words in an array.
      * Attempts to allocate larger arrays may result in
      * OutOfMemoryError: Requested array size exceeds VM limit
+     * 可以分配的最大容量大小
      */
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
@@ -143,7 +148,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * Will not return a capacity greater than {@code MAX_ARRAY_SIZE}
      * unless the given minimum capacity is greater than that.
      *
-     * @param  minCapacity the desired minimum capacity
+     * @param  minCapacity the desired（要求） minimum capacity
      * @throws OutOfMemoryError if minCapacity is less than zero or
      *         greater than Integer.MAX_VALUE
      */
@@ -169,7 +174,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     /**
      * Attempts to reduce storage used for the character sequence.
      * If the buffer is larger than necessary to hold its current sequence of
-     * characters, then it may be resized to become more space efficient.
+     * characters, then it may be resized（调整大小） to become more space efficient.
      * Calling this method may, but is not required to, affect the value
      * returned by a subsequent call to the {@link #capacity()} method.
      */
@@ -182,7 +187,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     /**
      * Sets the length of the character sequence.
      * The sequence is changed to a new character sequence
-     * whose length is specified by the argument. For every nonnegative
+     * whose length is specified by the argument. For every nonnegative（正数）
      * index <i>k</i> less than {@code newLength}, the character at
      * index <i>k</i> in the new character sequence is the same as the
      * character at index <i>k</i> in the old sequence if <i>k</i> is less
@@ -217,19 +222,21 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
+     * 返回特定的索引的字符，计数是从0开始的
      * Returns the {@code char} value in this sequence at the specified index.
      * The first {@code char} value is at index {@code 0}, the next at index
      * {@code 1}, and so on, as in array indexing.
      * <p>
+     *
      * The index argument must be greater than or equal to
      * {@code 0}, and less than the length of this sequence.
      *
      * <p>If the {@code char} value specified by the index is a
-     * <a href="Character.html#unicode">surrogate</a>, the surrogate
+     * <a href="Character.html#unicode">surrogate（替代的）</a>, the surrogate
      * value is returned.
      *
      * @param      index   the index of the desired {@code char} value.
-     * @return     the {@code char} value at the specified index.
+     * @return     the {@code char} value at the specified index（特定序列的值）.
      * @throws     IndexOutOfBoundsException  if {@code index} is
      *             negative or greater than or equal to {@code length()}.
      */
@@ -241,7 +248,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
-     * Returns the character (Unicode code point) at the specified
+     * Returns the character (Unicode code point（编码）) at the specified
      * index. The index refers to {@code char} values
      * (Unicode code units) and ranges from {@code 0} to
      * {@link #length()}{@code  - 1}.
@@ -255,7 +262,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * the {@code char} value at the given index is returned.
      *
      * @param      index the index to the {@code char} values
-     * @return     the code point value of the character at the
+     * @return     the code point value（代码点值） of the character at the
      *             {@code index}
      * @exception  IndexOutOfBoundsException  if the {@code index}
      *             argument is negative or not less than the length of this
@@ -270,9 +277,9 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
 
     /**
      * Returns the character (Unicode code point) before the specified
-     * index. The index refers to {@code char} values
+     * index（特定索引之前）. The index refers to {@code char} values
      * (Unicode code units) and ranges from {@code 1} to {@link
-     * #length()}.
+     * #length()}（另一种表示方法是0-length（）-1之间）.
      *
      * <p> If the {@code char} value at {@code (index - 1)}
      * is in the low-surrogate range, {@code (index - 2)} is not
@@ -352,6 +359,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
+     * 把字符复制到指定的字符数组中
      * Characters are copied from this sequence into the
      * destination character array {@code dst}. The first character to
      * be copied is at index {@code srcBegin}; the last character to
@@ -361,6 +369,8 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * at index {@code dstBegin} and ending at index:
      * <pre>{@code
      * dstbegin + (srcEnd-srcBegin) - 1
+     *
+     * 末尾的偏移数量（dstbegin + (srcEnd-srcBegin) - 1）
      * }</pre>
      *
      * @param      srcBegin   start copying at this offset.
@@ -387,13 +397,14 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
             throw new StringIndexOutOfBoundsException(srcEnd);
         if (srcBegin > srcEnd)
             throw new StringIndexOutOfBoundsException("srcBegin > srcEnd");
+        // 调用本地方法
         System.arraycopy(value, srcBegin, dst, dstBegin, srcEnd - srcBegin);
     }
 
     /**
      * The character at the specified index is set to {@code ch}. This
-     * sequence is altered to represent a new character sequence that is
-     * identical to the old character sequence, except that it contains the
+     * sequence is altered（改变） to represent a new character sequence that is
+     * identical(同一的) to the old character sequence, except that it contains the
      * character {@code ch} at position {@code index}.
      * <p>
      * The index argument must be greater than or equal to
@@ -407,10 +418,12 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     public void setCharAt(int index, char ch) {
         if ((index < 0) || (index >= count))
             throw new StringIndexOutOfBoundsException(index);
+        // 设置序列值
         value[index] = ch;
     }
 
     /**
+     * 新增String的对象参数
      * Appends the string representation of the {@code Object} argument.
      * <p>
      * The overall effect is exactly as if the argument were converted
@@ -422,6 +435,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * @return  a reference to this object.
      */
     public AbstractStringBuilder append(Object obj) {
+        // 调用String类型参数的方法
         return append(String.valueOf(obj));
     }
 
@@ -430,7 +444,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * <p>
      * The characters of the {@code String} argument are appended, in
      * order, increasing the length of this sequence by the length of the
-     * argument. If {@code str} is {@code null}, then the four
+     * argument.（新增长度就是字符串参数的长度） If {@code str} is {@code null}, then the four
      * characters {@code "null"} are appended.
      * <p>
      * Let <i>n</i> be the length of this character sequence just prior to
@@ -447,6 +461,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
         if (str == null)
             return appendNull();
         int len = str.length();
+        // 扩容
         ensureCapacityInternal(count + len);
         str.getChars(0, len, value, count);
         count += len;
@@ -459,6 +474,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
             return appendNull();
         int len = sb.length();
         ensureCapacityInternal(count + len);
+
         sb.getChars(0, len, value, count);
         count += len;
         return this;
@@ -467,6 +483,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     /**
      * @since 1.8
      */
+    // 面向接口/抽象类编程
     AbstractStringBuilder append(AbstractStringBuilder asb) {
         if (asb == null)
             return appendNull();
@@ -480,6 +497,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     // Documentation in subclasses because of synchro difference
     @Override
     public AbstractStringBuilder append(CharSequence s) {
+        // 判断字符序列属于什么对象实例，从而调用其方法
         if (s == null)
             return appendNull();
         if (s instanceof String)
@@ -492,6 +510,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
 
     private AbstractStringBuilder appendNull() {
         int c = count;
+        // 内部扩容
         ensureCapacityInternal(c + 4);
         final char[] value = this.value;
         value[c++] = 'n';
@@ -511,8 +530,8 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * this sequence up to the (exclusive) index {@code end}. The length
      * of this sequence is increased by the value of {@code end - start}.
      * <p>
-     * Let <i>n</i> be the length of this character sequence just prior to
-     * execution of the {@code append} method. Then the character at
+     * Let <i>n</i> be the length of this character sequence just prior（优先） to
+     * execution（执行） of the {@code append} method. Then the character at
      * index <i>k</i> in this character sequence becomes equal to the
      * character at index <i>k</i> in this sequence, if <i>k</i> is less than
      * <i>n</i>; otherwise, it is equal to the character at index
@@ -522,7 +541,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * characters as if the s parameter was a sequence containing the four
      * characters {@code "null"}.
      *
-     * @param   s the sequence to append.
+     * @param   s the sequence to append（字符序列）.
      * @param   start   the starting index of the subsequence to be appended.
      * @param   end     the end index of the subsequence to be appended.
      * @return  a reference to this object.
@@ -540,8 +559,11 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
                 "start " + start + ", end " + end + ", s.length() "
                 + s.length());
         int len = end - start;
+        // 扩容
         ensureCapacityInternal(count + len);
+
         for (int i = start, j = count; i < end; i++, j++)
+            // 处理赋值
             value[j] = s.charAt(i);
         count += len;
         return this;
@@ -572,6 +594,8 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
+     *
+     * 新增子类字符数组表示的String参数
      * Appends the string representation of a subarray of the
      * {@code char} array argument to this sequence.
      * <p>
@@ -602,10 +626,11 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
+     * 添加布尔型
      * Appends the string representation of the {@code boolean}
      * argument to the sequence.
      * <p>
-     * The overall effect is exactly as if the argument were converted
+     * The overall effect（整体上影响） is exactly as if the argument were converted
      * to a string by the method {@link String#valueOf(boolean)},
      * and the characters of that string were then
      * {@link #append(String) appended} to this character sequence.
@@ -615,6 +640,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      */
     public AbstractStringBuilder append(boolean b) {
         if (b) {
+            //扩展容量
             ensureCapacityInternal(count + 4);
             value[count++] = 't';
             value[count++] = 'r';
@@ -654,6 +680,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
+     * 新增整型参数
      * Appends the string representation of the {@code int}
      * argument to this sequence.
      * <p>
@@ -666,12 +693,13 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * @return  a reference to this object.
      */
     public AbstractStringBuilder append(int i) {
+        // 如果整型为最小值
         if (i == Integer.MIN_VALUE) {
             append("-2147483648");
             return this;
         }
-        int appendedLength = (i < 0) ? Integer.stringSize(-i) + 1
-                                     : Integer.stringSize(i);
+        // 小于0的处理
+        int appendedLength = (i < 0) ? Integer.stringSize(-i) + 1 : Integer.stringSize(i);
         int spaceNeeded = count + appendedLength;
         ensureCapacityInternal(spaceNeeded);
         Integer.getChars(i, spaceNeeded, value);
@@ -718,6 +746,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * @return  a reference to this object.
      */
     public AbstractStringBuilder append(float f) {
+        //转化
         FloatingDecimal.appendTo(f,this);
         return this;
     }
@@ -740,14 +769,15 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
+     * 删除一段子类字符
      * Removes the characters in a substring of this sequence.
      * The substring begins at the specified {@code start} and extends to
      * the character at index {@code end - 1} or to the end of the
      * sequence if no such character exists. If
      * {@code start} is equal to {@code end}, no changes are made.
      *
-     * @param      start  The beginning index, inclusive.
-     * @param      end    The ending index, exclusive.
+     * @param      start  The beginning index, inclusive（包含）.
+     * @param      end    The ending index, exclusive（不包含）.
      * @return     This object.
      * @throws     StringIndexOutOfBoundsException  if {@code start}
      *             is negative, greater than {@code length()}, or
@@ -782,14 +812,14 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * were then {@link #append(char[]) appended} to this character
      * sequence.
      *
-     * @param   codePoint   a Unicode code point
+     * @param   codePoint   a Unicode code point 编码点
      * @return  a reference to this object.
      * @exception IllegalArgumentException if the specified
      * {@code codePoint} isn't a valid Unicode code point
      */
     public AbstractStringBuilder appendCodePoint(int codePoint) {
         final int count = this.count;
-
+//       校验
         if (Character.isBmpCodePoint(codePoint)) {
             ensureCapacityInternal(count + 1);
             value[count] = (char) codePoint;
@@ -805,10 +835,11 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
+     * 删除特定位置上的字符
      * Removes the {@code char} at the specified position in this
-     * sequence. This sequence is shortened by one {@code char}.
+     * sequence. This sequence is shortened（缩短） by one {@code char}.
      *
-     * <p>Note: If the character at the given index is a supplementary
+     * <p>Note: If the character at the given index is a supplementary（补码字符）
      * character, this method does not remove the entire character. If
      * correct handling of supplementary characters is required,
      * determine the number of {@code char}s to remove by calling
@@ -834,10 +865,11 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * with characters in the specified {@code String}. The substring
      * begins at the specified {@code start} and extends to the character
      * at index {@code end - 1} or to the end of the
-     * sequence if no such character exists. First the
-     * characters in the substring are removed and then the specified
+     * sequence if no such character exists.
+     * 第一步是先把特定位置上的字符先进行删除后在插入特定的字符
+     * First the characters in the substring are removed and then the specified
      * {@code String} is inserted at {@code start}. (This
-     * sequence will be lengthened to accommodate the
+     * sequence will be lengthened（延长） to accommodate（适应） the
      * specified String if necessary.)
      *
      * @param      start    The beginning index, inclusive.
@@ -869,6 +901,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
+     * 字符串切割，返回从start位置的索引到末尾的
      * Returns a new {@code String} that contains a subsequence of
      * characters currently contained in this character sequence. The
      * substring begins at the specified index and extends to the end of
@@ -943,13 +976,13 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * array argument into this sequence. The subarray begins at the
      * specified {@code offset} and extends {@code len} {@code char}s.
      * The characters of the subarray are inserted into this sequence at
-     * the position indicated by {@code index}. The length of this
+     * the position indicated（正确的指示） by {@code index}. The length of this
      * sequence increases by {@code len} {@code char}s.
      *
      * @param      index    position at which to insert subarray.
      * @param      str       A {@code char} array.
      * @param      offset   the index of the first {@code char} in subarray to
-     *             be inserted.
+     *             be inserted. 偏移量
      * @param      len      the number of {@code char}s in the subarray to
      *             be inserted.
      * @return     This object
@@ -979,6 +1012,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * Inserts the string representation of the {@code Object}
      * argument into this character sequence.
      * <p>
+     *      需要转成String类型
      * The overall effect is exactly as if the second argument were
      * converted to a string by the method {@link String#valueOf(Object)},
      * and the characters of that string were then
@@ -1070,6 +1104,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
         if ((offset < 0) || (offset > length()))
             throw new StringIndexOutOfBoundsException(offset);
         int len = str.length;
+        // 扩容量
         ensureCapacityInternal(count + len);
         System.arraycopy(value, offset, value, offset + len, count - offset);
         System.arraycopy(str, 0, value, offset, len);
@@ -1081,7 +1116,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * Inserts the specified {@code CharSequence} into this sequence.
      * <p>
      * The characters of the {@code CharSequence} argument are inserted,
-     * in order, into this sequence at the indicated offset, moving up
+     * in order（按顺序）, into this sequence at the indicated offset, moving up
      * any characters originally above that position and increasing the length
      * of this sequence by the length of the argument s.
      * <p>
@@ -1171,9 +1206,11 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
+     *
      * Inserts the string representation of the {@code boolean}
      * argument into this sequence.
      * <p>
+     * 转化成String型
      * The overall effect is exactly as if the second argument were
      * converted to a string by the method {@link String#valueOf(boolean)},
      * and the characters of that string were then
@@ -1313,6 +1350,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
+     * 返回特定的字符串的索引值
      * Returns the index within this string of the first occurrence of the
      * specified substring. The integer returned is the smallest value
      * <i>k</i> such that:
@@ -1351,6 +1389,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
+     * 返回字符串最后出现的索引
      * Returns the index within this string of the rightmost occurrence
      * of the specified substring.  The rightmost empty string "" is
      * considered to occur at the index value {@code this.length()}.
@@ -1390,6 +1429,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     }
 
     /**
+     * 反转
      * Causes this character sequence to be replaced by the reverse of
      * the sequence. If there are any surrogate pairs included in the
      * sequence, these are treated as single characters for the
@@ -1404,7 +1444,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      * character sequence.
      *
      * <p>Note that the reverse operation may result in producing
-     * surrogate pairs that were unpaired low-surrogates and
+     * surrogate pairs（代理对） that were unpaired low-surrogates and
      * high-surrogates before the operation. For example, reversing
      * "\u005CuDC00\u005CuD800" produces "\u005CuD800\u005CuDC00" which is
      * a valid surrogate pair.
@@ -1414,6 +1454,7 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
     public AbstractStringBuilder reverse() {
         boolean hasSurrogates = false;
         int n = count - 1;
+        // 用位移的形式
         for (int j = (n-1) >> 1; j >= 0; j--) {
             int k = n - j;
             char cj = value[j];
