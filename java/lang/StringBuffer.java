@@ -29,6 +29,7 @@ import java.util.Arrays;
 
 /**
  * A thread-safe, mutable sequence of characters.
+ * 线程安全，可变的字符序列
  * A string buffer is like a {@link String}, but can be modified. At any
  * point in time it contains some particular sequence of characters, but
  * the length and content of the sequence can be changed through certain
@@ -38,17 +39,18 @@ import java.util.Arrays;
  * are synchronized where necessary so that all the operations on any
  * particular instance behave as if they occur in some serial order
  * that is consistent with the order of the method calls made by each of
- * the individual threads involved.
+ * the individual（个别的） threads involved.
  * <p>
- * The principal operations on a {@code StringBuffer} are the
+ * The principal（主要的） operations on a {@code StringBuffer} are the
  * {@code append} and {@code insert} methods, which are
  * overloaded so as to accept data of any type. Each effectively
- * converts a given datum to a string and then appends or inserts the
+ * converts a given datum（基点） to a string and then appends or inserts the
  * characters of that string to the string buffer. The
  * {@code append} method always adds these characters at the end
  * of the buffer; the {@code insert} method adds the characters at
  * a specified point.
  * <p>
+ *     append和insert方法类似
  * For example, if {@code z} refers to a string buffer object
  * whose current contents are {@code "start"}, then
  * the method call {@code z.append("le")} would cause the string
@@ -58,6 +60,7 @@ import java.util.Arrays;
  * <p>
  * In general, if sb refers to an instance of a {@code StringBuffer},
  * then {@code sb.append(x)} has the same effect as
+ * inset末尾添加字符串
  * {@code sb.insert(sb.length(), x)}.
  * <p>
  * Whenever an operation occurs involving a source sequence (such as
@@ -88,12 +91,14 @@ import java.util.Arrays;
  * {@code StringBuilder} class should generally be used in preference to
  * this one, as it supports all of the same operations but it is faster, as
  * it performs no synchronization.
+ * 速度更快，而且没有同步锁
  *
  * @author      Arthur van Hoff
  * @see     java.lang.StringBuilder
  * @see     java.lang.String
  * @since   JDK1.0
  */
+//继承了AbstractStringBuilder抽象类
  public final class StringBuffer
     extends AbstractStringBuilder
     implements java.io.Serializable, CharSequence
@@ -102,6 +107,7 @@ import java.util.Arrays;
     /**
      * A cache of the last value returned by toString. Cleared
      * whenever the StringBuffer is modified.
+     * 存在的缓存最后返回的值
      */
     private transient char[] toStringCache;
 
@@ -111,6 +117,7 @@ import java.util.Arrays;
     /**
      * Constructs a string buffer with no characters in it and an
      * initial capacity of 16 characters.
+     * 无参构造器，初始化容量大小为16个字符
      */
     public StringBuffer() {
         super(16);
@@ -121,6 +128,7 @@ import java.util.Arrays;
      * the specified initial capacity.
      *
      * @param      capacity  the initial capacity.
+     *                       初始化特定的大小
      * @exception  NegativeArraySizeException  if the {@code capacity}
      *               argument is less than {@code 0}.
      */
@@ -136,6 +144,7 @@ import java.util.Arrays;
      * @param   str   the initial contents of the buffer.
      */
     public StringBuffer(String str) {
+        // 字符串的长度+16
         super(str.length() + 16);
         append(str);
     }
@@ -189,6 +198,7 @@ import java.util.Arrays;
     @Override
     public synchronized void setLength(int newLength) {
         toStringCache = null;
+        //调用父类的方法
         super.setLength(newLength);
     }
 
@@ -253,6 +263,7 @@ import java.util.Arrays;
     public synchronized void setCharAt(int index, char ch) {
         if ((index < 0) || (index >= count))
             throw new StringIndexOutOfBoundsException(index);
+        //清空缓存
         toStringCache = null;
         value[index] = ch;
     }
@@ -312,6 +323,7 @@ import java.util.Arrays;
     }
 
     /**
+     * 特定的字符序列
      * Appends the specified {@code CharSequence} to this
      * sequence.
      * <p>
@@ -665,6 +677,7 @@ import java.util.Arrays;
 
     @Override
     public synchronized String toString() {
+        //
         if (toStringCache == null) {
             toStringCache = Arrays.copyOfRange(value, 0, count);
         }
@@ -672,6 +685,7 @@ import java.util.Arrays;
     }
 
     /**
+     * 序列化局域
      * Serializable fields for StringBuffer.
      *
      * @serialField value  char[]
