@@ -26,7 +26,7 @@
 package java.lang;
 
 /**
- * The Boolean class wraps a value of the primitive type
+ * The Boolean class wraps a value of the primitive(原始的) type
  * {@code boolean} in an object. An object of type
  * {@code Boolean} contains a single field whose type is
  * {@code boolean}.
@@ -100,7 +100,7 @@ public final class Boolean implements java.io.Serializable,
      * <p><b>Note: It is rarely appropriate to use this constructor.
      * Unless a <i>new</i> instance is required, the static factory
      * {@link #valueOf(boolean)} is generally a better choice. It is
-     * likely to yield significantly better space and time performance.</b>
+     * likely to yield significantly（明显） better space and time performance.</b>
      *
      * @param value the value of the {@code Boolean}.
      */
@@ -163,10 +163,7 @@ public final class Boolean implements java.io.Serializable,
         return value;
     }
 
-    public static void main(String[] args) {
-        Boolean b = true;
-        System.out.println(b.booleanValue());
-    }
+
 
     /**
      * Returns a {@code Boolean} instance representing the specified
@@ -176,7 +173,7 @@ public final class Boolean implements java.io.Serializable,
      * If a new {@code Boolean} instance is not required, this method
      * should generally be used in preference to the constructor
      * {@link #Boolean(boolean)}, as this method is likely to yield
-     * significantly better space and time performance.
+     * significantly better space and time performance（明显在时间和空间优于构建方法）.
      *
      * @param b a boolean value.
      * @return a {@code Boolean} instance representing {@code b}.
@@ -252,24 +249,6 @@ public final class Boolean implements java.io.Serializable,
 //  true的话返回的是1231，false的话hashCode是1237
     public static int hashCode(boolean value) {
         return value ? 1231 : 1237;
-    }
-
-    /**
-     * Returns {@code true} if and only if the argument is not
-     * {@code null} and is a {@code Boolean} object that
-     * represents the same {@code boolean} value as this object.
-     *
-     * @param obj the object to compare with.
-     * @return {@code true} if the Boolean objects represent the
-     * same value; {@code false} otherwise.
-     */
-//    Object方法
-//    obj如果是Boolean的一个实例。返回比较的值
-    public boolean equals(Object obj) {
-        if (obj instanceof Boolean) {
-            return value == ((Boolean) obj).booleanValue();
-        }
-        return false;
     }
 
     /**
@@ -368,6 +347,25 @@ public final class Boolean implements java.io.Serializable,
 //    方法表示逻辑上的或操作
     public static boolean logicalOr(boolean a, boolean b) {
         return a || b;
+    }
+
+    /**
+     * Returns {@code true} if and only if the argument is not
+     * {@code null} and is a {@code Boolean} object that
+     * represents the same {@code boolean} value as this object.
+     *
+     * @param obj the object to compare with.
+     * @return {@code true} if the Boolean objects represent the
+     * same value; {@code false} otherwise.
+     */
+//    Object方法
+
+    public boolean equals(Object obj) {
+        //obj如果是Boolean的一个实例。返回比较的值
+        if (obj instanceof Boolean) {
+            return value == ((Boolean) obj).booleanValue();
+        }
+        return false;
     }
 
     /**

@@ -27,15 +27,15 @@ package java.lang;
 
 
 /**
- * A mutable sequence of characters.  This class provides an API compatible
+ * A mutable sequence of characters.  This class provides an API compatible(兼容)
  * with {@code StringBuffer}, but with no guarantee of synchronization.
  * This class is designed for use as a drop-in replacement for
  * {@code StringBuffer} in places where the string buffer was being
- * used by a single thread (as is generally the case).   Where possible,
- * it is recommended that this class be used in preference to
+ * used by a single thread (as is generally the case一般情况).   Where possible,
+ * it is recommended that this class be used in preference（趋向） to
  * {@code StringBuffer} as it will be faster under most implementations.
  *
- * <p>The principal operations on a {@code StringBuilder} are the
+ * <p>The principal（主要的） operations on a {@code StringBuilder} are the
  * {@code append} and {@code insert} methods, which are
  * overloaded so as to accept data of any type. Each effectively
  * converts a given datum to a string and then appends or inserts the
@@ -54,10 +54,11 @@ package java.lang;
  * In general, if sb refers to an instance of a {@code StringBuilder},
  * then {@code sb.append(x)} has the same effect as
  * {@code sb.insert(sb.length(), x)}.
+ * sb.append(x)相同于sb.insert(sb.length(), x)
  * <p>
  * Every string builder has a capacity. As long as the length of the
  * character sequence contained in the string builder does not exceed
- * the capacity, it is not necessary to allocate a new internal
+ * the capacity, it is not necessary to allocate（分配） a new internal
  * buffer. If the internal buffer overflows, it is automatically made larger.
  *
  * <p>Instances of {@code StringBuilder} are not safe for
@@ -93,6 +94,8 @@ public final class StringBuilder
      * Constructs a string builder with no characters in it and an
      * initial capacity specified by the {@code capacity} argument.
      *
+     * 指定的容量大小
+     *
      * @param      capacity  the initial capacity.
      * @throws     NegativeArraySizeException  if the {@code capacity}
      *               argument is less than {@code 0}.
@@ -104,7 +107,7 @@ public final class StringBuilder
     /**
      * Constructs a string builder initialized to the contents of the
      * specified string. The initial capacity of the string builder is
-     * {@code 16} plus the length of the string argument.
+     * {@code 16} plus the length of the string argument（16+字符串的长度大小）.
      *
      * @param   str   the initial contents of the buffer.
      */
@@ -141,7 +144,7 @@ public final class StringBuilder
      * Appends the specified {@code StringBuffer} to this sequence.
      * <p>
      * The characters of the {@code StringBuffer} argument are appended,
-     * in order, to this sequence, increasing the
+     * in order（按顺序）, to this sequence, increasing the
      * length of this sequence by the length of the argument.
      * If {@code sb} is {@code null}, then the four characters
      * {@code "null"} are appended to this sequence.
@@ -211,6 +214,7 @@ public final class StringBuilder
 
     @Override
     public StringBuilder append(long lng) {
+        // 调用父类的append方法
         super.append(lng);
         return this;
     }
@@ -232,6 +236,7 @@ public final class StringBuilder
      */
     @Override
     public StringBuilder appendCodePoint(int codePoint) {
+        // codePoint是Ascii的值
         super.appendCodePoint(codePoint);
         return this;
     }
@@ -411,6 +416,8 @@ public final class StringBuilder
      * Save the state of the {@code StringBuilder} instance to a stream
      * (that is, serialize it).
      *
+     * 主要用于处理数据流
+     * 私有方法
      * @serialData the number of characters currently stored in the string
      *             builder ({@code int}), followed by the characters in the
      *             string builder ({@code char[]}).   The length of the
