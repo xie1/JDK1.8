@@ -37,7 +37,7 @@ import java.lang.annotation.Native;
  * {@code int}, as well as other constants and methods useful when
  * dealing with an {@code int}.
  *
- * <p>Implementation note: The implementations of the "bit twiddling"
+ * <p>Implementation（实现） note: The implementations of the "bit twiddling"
  * methods (such as {@link #highestOneBit(int) highestOneBit} and
  * {@link #numberOfTrailingZeros(int) numberOfTrailingZeros}) are
  * based on material from Henry S. Warren, Jr.'s <i>Hacker's
@@ -84,6 +84,7 @@ public final class Integer extends Number implements Comparable<Integer> {
     };
 
     /**
+     * 第一个参数根据特定的基数返回字符串
      * Returns a string representation of the first argument in the
      * radix specified by the second argument.
      *
