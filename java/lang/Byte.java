@@ -67,7 +67,7 @@ public final class Byte extends Number implements Comparable<Byte> {
 
 	/**
 	 * Returns a new {@code String} object representing the
-	 * specified {@code byte}. The radix is assumed to be 10.
+	 * specified {@code byte}. The radix(基数) is assumed（假设） to be 10.
 	 *
 	 * @param b the {@code byte} to be converted
 	 * @return the string representation of the specified {@code byte}
@@ -114,10 +114,12 @@ public final class Byte extends Number implements Comparable<Byte> {
 //	为什么要加个缓存
 	public static Byte valueOf(byte b) {
 		final int offset = 128;
+		// 添加了缓存
 		return ByteCache.cache[(int) b + offset];
 	}
 
 	/**
+	 * 解析字符串参数作为第二个参数指定的基数符号的字节
 	 * Parses the string argument as a signed {@code byte} in the
 	 * radix specified by the second argument. The characters in the
 	 * string must all be digits, of the specified radix (as
@@ -136,8 +138,8 @@ public final class Byte extends Number implements Comparable<Byte> {
 	 * length zero.
 	 * <p>
 	 * <li> The radix is either smaller than {@link
-	 * java.lang.Character#MIN_RADIX} or larger than {@link
-	 * java.lang.Character#MAX_RADIX}.
+	 * java.lang.Character#MIN_RADIX}2 or larger than {@link
+	 * java.lang.Character#MAX_RADIX}36.
 	 * <p>
 	 * <li> Any character of the string is not a digit of the
 	 * specified radix, except that the first character may be a minus
@@ -151,7 +153,7 @@ public final class Byte extends Number implements Comparable<Byte> {
 	 *
 	 * @param s     the {@code String} containing the
 	 *              {@code byte}
-	 *              representation to be parsed
+	 *              representation to be parsed(解析)
 	 * @param radix the radix to be used while parsing {@code s}
 	 * @return the {@code byte} value represented by the string
 	 * argument in the specified radix
@@ -160,6 +162,7 @@ public final class Byte extends Number implements Comparable<Byte> {
 	 */
 	public static byte parseByte(String s, int radix)
 			throws NumberFormatException {
+		// 通过Integer型
 		int i = Integer.parseInt(s, radix);
 		if (i < MIN_VALUE || i > MAX_VALUE)
 			throw new NumberFormatException(
@@ -168,7 +171,8 @@ public final class Byte extends Number implements Comparable<Byte> {
 	}
 
 	/**
-	 * Parses the string argument as a signed decimal {@code
+	 * 字符串的任何字符不是指定基数的数字，除了第一个字符可能是一个减号' - '(' u002D')或加号'+'(' u002B')提供的字符串长度比1长以上
+	 * Parses the string argument as a signed decimal （十进制）{@code
 	 * byte}. The characters in the string must all be decimal digits,
 	 * except that the first character may be an ASCII minus sign
 	 * {@code '-'} ({@code '\u005Cu002D'}) to indicate a negative
@@ -185,8 +189,9 @@ public final class Byte extends Number implements Comparable<Byte> {
 	 * @throws NumberFormatException if the string does not
 	 *                               contain a parsable {@code byte}.
 	 */
-//
+
 	public static byte parseByte(String s) throws NumberFormatException {
+		// 调用上面的方法
 		return parseByte(s, 10);
 	}
 
@@ -208,7 +213,7 @@ public final class Byte extends Number implements Comparable<Byte> {
 	 * </blockquote>
 	 *
 	 * @param s     the string to be parsed
-	 * @param radix the radix to be used in interpreting {@code s}
+	 * @param radix the radix to be used in interpreting(解释) {@code s}
 	 * @return a {@code Byte} object holding the value
 	 * represented by the string argument in the
 	 * specified radix.
@@ -243,11 +248,13 @@ public final class Byte extends Number implements Comparable<Byte> {
 	 *                               not contain a parsable {@code byte}.
 	 */
 	public static Byte valueOf(String s) throws NumberFormatException {
+		//按照以10为基数的解析字符串，返回还是自己本身
 		return valueOf(s, 10);
 	}
 
 	/**
-	 * Decodes a {@code String} into a {@code Byte}.
+	 * Decodes(解码) a {@code String} into a {@code Byte}.
+	 * 可以是10进制，16进制，8进制
 	 * Accepts decimal, hexadecimal, and octal numbers given by
 	 * the following grammar:
 	 * <p>
@@ -452,6 +459,7 @@ public final class Byte extends Number implements Comparable<Byte> {
 //	复写了Object的equals方法
 //	这个对象和特定对象进行比较,如果而且这个参数不为空，并且包含一样的byte的值，返回结果为true
 	public boolean equals(Object obj) {
+		// 实例判断
 		if (obj instanceof Byte) {
 			return value == ((Byte) obj).byteValue();
 		}
@@ -459,7 +467,7 @@ public final class Byte extends Number implements Comparable<Byte> {
 	}
 
 	/**
-	 * Compares two {@code Byte} objects numerically.
+	 * Compares two {@code Byte} objects numerically（数字化）.
 	 *
 	 * @param anotherByte the {@code Byte} to be compared.
 	 * @return the value {@code 0} if this {@code Byte} is
