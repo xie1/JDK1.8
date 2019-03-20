@@ -37,7 +37,7 @@ import java.lang.annotation.Native;
  * {@code int}, as well as other constants and methods useful when
  * dealing with an {@code int}.
  *
- * <p>Implementation（实现） note: The implementations of the "bit twiddling"
+ * <p>Implementation（实现） note: The implementations of the "bit twiddling(转化)"
  * methods (such as {@link #highestOneBit(int) highestOneBit} and
  * {@link #numberOfTrailingZeros(int) numberOfTrailingZeros}) are
  * based on material from Henry S. Warren, Jr.'s <i>Hacker's
@@ -95,9 +95,9 @@ public final class Integer extends Number implements Comparable<Integer> {
      * <p>If the first argument is negative, the first element of the
      * result is the ASCII minus character {@code '-'}
      * ({@code '\u005Cu002D'}). If the first argument is not
-     * negative, no sign character appears in the result.
+     * negative, no sign character（无符号） appears in the result.
      *
-     * <p>The remaining characters of the result represent the magnitude
+     * <p>The remaining characters of the result represent the magnitude（大小）
      * of the first argument. If the magnitude is zero, it is
      * represented by a single zero character {@code '0'}
      * ({@code '\u005Cu0030'}); otherwise, the first character of
@@ -129,7 +129,9 @@ public final class Integer extends Number implements Comparable<Integer> {
      * @see     java.lang.Character#MIN_RADIX
      */
     public static String toString(int i, int radix) {
+        //如果超过最大最小值话
         if (radix < Character.MIN_RADIX || radix > Character.MAX_RADIX)
+            //radix为10
             radix = 10;
 
         /* Use the faster version */
@@ -160,7 +162,7 @@ public final class Integer extends Number implements Comparable<Integer> {
 
     /**
      * Returns a string representation of the first argument as an
-     * unsigned integer value in the radix specified by the second
+     * unsigned integer value（无符号整型值） in the radix specified by the second
      * argument.
      *
      * <p>If the radix is smaller than {@code Character.MIN_RADIX}
@@ -170,7 +172,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      * <p>Note that since the first argument is treated as an unsigned
      * value, no leading sign character is printed.
      *
-     * <p>If the magnitude is zero, it is represented by a single zero
+     * <p>If the magnitude（大小） is zero, it is represented by a single zero
      * character {@code '0'} ({@code '\u005Cu0030'}); otherwise,
      * the first character of the representation of the magnitude will
      * not be the zero character.
@@ -178,7 +180,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      * <p>The behavior of radixes and the characters used as digits
      * are the same as {@link #toString(int, int) toString}.
      *
-     * @param   i       an integer to be converted to an unsigned string.
+     * @param   i       an integer to be converted to an unsigned string（一个整型转成无符号的字符串）.
      * @param   radix   the radix to use in the string representation.
      * @return  an unsigned string representation of the argument in the specified radix.
      * @see     #toString(int, int)
@@ -189,6 +191,7 @@ public final class Integer extends Number implements Comparable<Integer> {
     }
 
     /**
+     * 无符号的16进制
      * Returns a string representation of the integer argument as an
      * unsigned integer in base&nbsp;16.
      *
@@ -198,7 +201,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      * in hexadecimal (base&nbsp;16) with no extra leading
      * {@code 0}s.
      *
-     * <p>The value of the argument can be recovered from the returned
+     * <p>The value of the argument can be recovered（恢复） from the returned
      * string {@code s} by calling {@link
      * Integer#parseUnsignedInt(String, int)
      * Integer.parseUnsignedInt(s, 16)}.
@@ -207,7 +210,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      * single zero character {@code '0'} ({@code '\u005Cu0030'});
      * otherwise, the first character of the representation of the
      * unsigned magnitude will not be the zero character. The
-     * following characters are used as hexadecimal digits:
+     * following characters are used as hexadecimal digits（16进制）:
      *
      * <blockquote>
      *  {@code 0123456789abcdef}
@@ -235,6 +238,7 @@ public final class Integer extends Number implements Comparable<Integer> {
     }
 
     /**
+     * 返回一个字符串表示用8进制的无符号整型
      * Returns a string representation of the integer argument as an
      * unsigned integer in base&nbsp;8.
      *
@@ -242,7 +246,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      * if the argument is negative; otherwise, it is equal to the
      * argument.  This value is converted to a string of ASCII digits
      * in octal (base&nbsp;8) with no extra leading {@code 0}s.
-     *
+     *g
      * <p>The value of the argument can be recovered from the returned
      * string {@code s} by calling {@link
      * Integer#parseUnsignedInt(String, int)
@@ -301,11 +305,12 @@ public final class Integer extends Number implements Comparable<Integer> {
      * @since   JDK1.0.2
      */
     public static String toBinaryString(int i) {
+        // 通过偏移
         return toUnsignedString0(i, 1);
     }
 
     /**
-     * Convert the integer to an unsigned number.
+     * Convert the integer to an unsigned number(主要是通过最高位区分是否是有符号，无符号存储的正数比有符号的值大的多).
      */
     private static String toUnsignedString0(int val, int shift) {
         // assert shift > 0 && shift <=5 : "Illegal shift value";
@@ -319,7 +324,7 @@ public final class Integer extends Number implements Comparable<Integer> {
         return new String(buf, true);
     }
 
-    /**
+    /**格式化一个整型
      * Format a long (treated as unsigned) into a character buffer.
      * @param val the unsigned int to format
      * @param shift the log2 of the base to format in (4 for hex, 3 for octal, 1 for binary)
@@ -330,6 +335,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      */
      static int formatUnsignedInt(int val, int shift, char[] buf, int offset, int len) {
         int charPos = len;
+        // 偏移量
         int radix = 1 << shift;
         int mask = radix - 1;
         do {
@@ -399,6 +405,7 @@ public final class Integer extends Number implements Comparable<Integer> {
         if (i == Integer.MIN_VALUE)
             return "-2147483648";
         int size = (i < 0) ? stringSize(-i) + 1 : stringSize(i);
+        // 存在一个字符数组
         char[] buf = new char[size];
         getChars(i, size, buf);
         return new String(buf, true);
@@ -406,12 +413,13 @@ public final class Integer extends Number implements Comparable<Integer> {
 
     /**
      * Returns a string representation of the argument as an unsigned
-     * decimal value.
+     * decimal(10进制) value.
      *
      * The argument is converted to unsigned decimal representation
      * and returned as a string exactly as if the argument and radix
      * 10 were given as arguments to the {@link #toUnsignedString(int,
      * int)} method.
+     * 相同于调用toUnsignedString(int,int radix)，radix为10
      *
      * @param   i  an integer to be converted to an unsigned string.
      * @return  an unsigned string representation of the argument.
@@ -423,6 +431,7 @@ public final class Integer extends Number implements Comparable<Integer> {
     }
 
     /**
+     * 把代表整型的字符放在字符缓存数组中
      * Places characters representing the integer i into the
      * character array buf. The characters are placed into
      * the buffer backwards starting with the least significant
@@ -431,6 +440,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      *
      * Will fail if i == Integer.MIN_VALUE
      */
+    //默认的包下才有调用权限
     static void getChars(int i, int index, char[] buf) {
         int q, r;
         int charPos = index;
@@ -476,6 +486,8 @@ public final class Integer extends Number implements Comparable<Integer> {
     }
 
     /**
+     * parseInt(String s,int radix)就是求“int radix”进制数“String s”的十进制数是多少
+     *
      * Parses the string argument as a signed integer in the radix
      * specified by the second argument. The characters in the string
      * must all be digits of the specified radix (as determined by
@@ -507,6 +519,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      * </ul>
      *
      * <p>Examples:
+     * radix是指8，10，16，2进制
      * <blockquote><pre>
      * parseInt("0", 10) returns 0
      * parseInt("473", 10) returns 473
@@ -542,7 +555,7 @@ public final class Integer extends Number implements Comparable<Integer> {
         if (s == null) {
             throw new NumberFormatException("null");
         }
-
+        // radix最小是2
         if (radix < Character.MIN_RADIX) {
             throw new NumberFormatException("radix " + radix +
                                             " less than Character.MIN_RADIX");
@@ -561,8 +574,10 @@ public final class Integer extends Number implements Comparable<Integer> {
         int digit;
 
         if (len > 0) {
+            // 获取传入的参数的第一字符
             char firstChar = s.charAt(0);
             if (firstChar < '0') { // Possible leading "+" or "-"
+                // 判断正负号
                 if (firstChar == '-') {
                     negative = true;
                     limit = Integer.MIN_VALUE;
@@ -576,6 +591,7 @@ public final class Integer extends Number implements Comparable<Integer> {
             multmin = limit / radix;
             while (i < len) {
                 // Accumulating negatively avoids surprises near MAX_VALUE
+               // 转化
                 digit = Character.digit(s.charAt(i++),radix);
                 if (digit < 0) {
                     throw NumberFormatException.forInputString(s);
@@ -613,11 +629,12 @@ public final class Integer extends Number implements Comparable<Integer> {
      *               parsable integer.
      */
     public static int parseInt(String s) throws NumberFormatException {
+        // 返回的10进制
         return parseInt(s,10);
     }
 
     /**
-     * Parses the string argument as an unsigned integer in the radix
+     * Parses the string argument as an unsigned integer（无符号） in the radix
      * specified by the second argument.  An unsigned integer maps the
      * values usually associated with negative numbers to positive
      * numbers larger than {@code MAX_VALUE}.
@@ -738,6 +755,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      *            does not contain a parsable {@code int}.
      */
     public static Integer valueOf(String s, int radix) throws NumberFormatException {
+        //先根据所给的基数，进行转化先，之后在调用工厂方法
         return Integer.valueOf(parseInt(s,radix));
     }
 
@@ -768,8 +786,8 @@ public final class Integer extends Number implements Comparable<Integer> {
     }
 
     /**
-     * Cache to support the object identity semantics of autoboxing for values between
-     * -128 and 127 (inclusive) as required by JLS.
+     * Cache to support the object identity semantics of autoboxing（自动装箱） for values between
+     * -128 and 127 (inclusive) as required by JLS.（即时编译）
      *
      * The cache is initialized on first usage.  The size of the cache
      * may be controlled by the {@code -XX:AutoBoxCacheMax=<size>} option.
@@ -778,11 +796,13 @@ public final class Integer extends Number implements Comparable<Integer> {
      * sun.misc.VM class.
      */
 
+    // 私有的整型缓存类
     private static class IntegerCache {
         static final int low = -128;
         static final int high;
         static final Integer cache[];
 
+        // 静态代码块
         static {
             // high value may be configured by property
             int h = 127;
