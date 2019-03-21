@@ -17,7 +17,6 @@ public class TestInteger {
 //        整型转成无符号的字符串
         System.out.println("Integer.toUnsignedString(3,11)-->" + Integer.toUnsignedString(3, 11));
 
-
         System.out.println("Integer.toHexString(15)-->" + Integer.toHexString(15));
 
         System.out.println("Integer.toOctalString(15)-->" + Integer.toOctalString(15));

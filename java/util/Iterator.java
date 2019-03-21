@@ -28,7 +28,8 @@ package java.util;
 import java.util.function.Consumer;
 
 /**
- * An iterator over a collection.  {@code Iterator} takes the place of
+ * 集合上的迭代器
+ * An iterator(迭代器) over a collection.  {@code Iterator} takes the place of
  * {@link Enumeration} in the Java Collections Framework.  Iterators
  * differ from enumerations in two ways:
  *
@@ -58,19 +59,20 @@ public interface Iterator<E> {
      * return an element rather than throwing an exception.)
      *
      * @return {@code true} if the iteration has more elements
+     * 判断是否有更多的元素
      */
     boolean hasNext();
 
     /**
      * Returns the next element in the iteration.
-     *
+     * 返回迭代器中的下个元素
      * @return the next element in the iteration
      * @throws NoSuchElementException if the iteration has no more elements
      */
     E next();
 
     /**
-     * Removes from the underlying collection the last element returned
+     * Removes from the underlying collection（底层集合） the last element returned
      * by this iterator (optional operation).  This method can be called
      * only once per call to {@link #next}.  The behavior of an iterator
      * is unspecified if the underlying collection is modified while the
@@ -94,7 +96,8 @@ public interface Iterator<E> {
     }
 
     /**
-     * Performs the given action for each remaining element until all elements
+     * 类似于遍历
+     * Performs（执行） the given action for each remaining element until all elements
      * have been processed or the action throws an exception.  Actions are
      * performed in the order of iteration, if that order is specified.
      * Exceptions thrown by the action are relayed to the caller.
@@ -111,6 +114,7 @@ public interface Iterator<E> {
      * @since 1.8
      */
     default void forEachRemaining(Consumer<? super E> action) {
+        // 非空处理
         Objects.requireNonNull(action);
         while (hasNext())
             action.accept(next());
