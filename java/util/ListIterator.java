@@ -27,15 +27,15 @@ package java.util;
 
 /**
  * An iterator for lists that allows the programmer
- * to traverse the list in either direction, modify
- * the list during iteration, and obtain the iterator's
+ * to traverse（遍历） the list in either direction, modify
+ * the list during iteration, and obtain（获取） the iterator's
  * current position in the list. A {@code ListIterator}
- * has no current element; its <I>cursor position</I> always
+ * has no current element; its <I>cursor（光标） position</I> always
  * lies between the element that would be returned by a call
  * to {@code previous()} and the element that would be
  * returned by a call to {@code next()}.
  * An iterator for a list of length {@code n} has {@code n+1} possible
- * cursor positions, as illustrated by the carets ({@code ^}) below:
+ * cursor positions, as illustrated by the carets ({@code ^}) below（如下是光标图解显示）:
  * <PRE>
  *                      Element(0)   Element(1)   Element(2)   ... Element(n-1)
  * cursor positions:  ^            ^            ^            ^                  ^
@@ -62,7 +62,7 @@ public interface ListIterator<E> extends Iterator<E> {
 
     /**
      * Returns {@code true} if this list iterator has more elements when
-     * traversing the list in the forward direction. (In other words,
+     * traversing（遍历） the list in the forward direction. (In other words,
      * returns {@code true} if {@link #next} would return an element rather
      * than throwing an exception.)
      *
@@ -73,9 +73,9 @@ public interface ListIterator<E> extends Iterator<E> {
 
     /**
      * Returns the next element in the list and advances the cursor position.
-     * This method may be called repeatedly to iterate through the list,
+     * This method may be called repeatedly（反复） to iterate through the list,
      * or intermixed with calls to {@link #previous} to go back and forth.
-     * (Note that alternating calls to {@code next} and {@code previous}
+     * (Note that alternating(交替) calls to {@code next} and {@code previous}
      * will return the same element repeatedly.)
      *
      * @return the next element in the list
@@ -85,7 +85,7 @@ public interface ListIterator<E> extends Iterator<E> {
 
     /**
      * Returns {@code true} if this list iterator has more elements when
-     * traversing the list in the reverse direction.  (In other words,
+     * traversing the list in the reverse（倒退） direction.  (In other words,
      * returns {@code true} if {@link #previous} would return an element
      * rather than throwing an exception.)
      *
@@ -98,7 +98,7 @@ public interface ListIterator<E> extends Iterator<E> {
      * Returns the previous element in the list and moves the cursor
      * position backwards.  This method may be called repeatedly to
      * iterate through the list backwards, or intermixed with calls to
-     * {@link #next} to go back and forth.  (Note that alternating calls
+     * {@link #next} to go back and forth.  (Note that alternating（交替） calls
      * to {@code next} and {@code previous} will return the same
      * element repeatedly.)
      *
@@ -109,8 +109,9 @@ public interface ListIterator<E> extends Iterator<E> {
     E previous();
 
     /**
+     * 返回下个元素的索引
      * Returns the index of the element that would be returned by a
-     * subsequent call to {@link #next}. (Returns list size if the list
+     * subsequent（后来的） call to {@link #next}. (Returns list size if the list
      * iterator is at the end of the list.)
      *
      * @return the index of the element that would be returned by a
@@ -156,6 +157,7 @@ public interface ListIterator<E> extends Iterator<E> {
      * #add} have been called after the last call to {@code next} or
      * {@code previous}.
      *
+     *
      * @param e the element with which to replace the last element returned by
      *          {@code next} or {@code previous}
      * @throws UnsupportedOperationException if the {@code set} operation
@@ -183,7 +185,7 @@ public interface ListIterator<E> extends Iterator<E> {
      * (This call increases by one the value that would be returned by a
      * call to {@code nextIndex} or {@code previousIndex}.)
      *
-     * @param e the element to insert
+     * @param e the element to insert（新增一个元素）
      * @throws UnsupportedOperationException if the {@code add} method is
      *         not supported by this list iterator
      * @throws ClassCastException if the class of the specified element
