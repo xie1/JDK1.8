@@ -31,7 +31,7 @@ import java.util.Spliterators;
 import java.util.function.Consumer;
 
 /**
- * Implementing this interface allows an object to be the target of
+ * Implementing this interface allows an object to be the target(目标) of
  * the "for-each loop" statement. See
  * <strong>
  * <a href="{@docRoot}/../technotes/guides/language/foreach.html">For-each Loop</a>
@@ -55,7 +55,7 @@ public interface Iterable<T> {
      * until all elements have been processed or the action throws an
      * exception.  Unless otherwise specified by the implementing class,
      * actions are performed in the order of iteration (if an iteration order
-     * is specified).  Exceptions thrown by the action are relayed to the
+     * is specified).  Exceptions thrown by the action are relayed（中断） to the
      * caller.
      *
      * @implSpec
@@ -70,6 +70,7 @@ public interface Iterable<T> {
      * @since 1.8
      */
     default void forEach(Consumer<? super T> action) {
+        // 非空过滤
         Objects.requireNonNull(action);
         for (T t : this) {
             action.accept(t);
@@ -84,7 +85,7 @@ public interface Iterable<T> {
      * The default implementation creates an
      * <em><a href="Spliterator.html#binding">early-binding</a></em>
      * spliterator from the iterable's {@code Iterator}.  The spliterator
-     * inherits the <em>fail-fast</em> properties of the iterable's iterator.
+     * inherits（继承） the <em>fail-fast</em> properties of the iterable's iterator.
      *
      * @implNote
      * The default implementation should usually be overridden.  The
