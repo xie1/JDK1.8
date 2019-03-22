@@ -30,16 +30,16 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /**
- * The root interface in the <i>collection hierarchy</i>.  A collection
+ * The root interface in the <i>collection hierarchy(集合层级)</i>.  A collection
  * represents a group of objects, known as its <i>elements</i>.  Some
- * collections allow duplicate elements and others do not.  Some are ordered
+ * collections allow duplicate（重复） elements and others do not.  Some are ordered
  * and others unordered.  The JDK does not provide any <i>direct</i>
  * implementations of this interface: it provides implementations of more
- * specific subinterfaces like <tt>Set</tt> and <tt>List</tt>.  This interface
- * is typically used to pass collections around and manipulate them where
+ * specific subinterfaces(子类的接口) like <tt>Set</tt> and <tt>List</tt>.  This interface
+ * is typically（代表性的） used to pass collections around and manipulate（操作） them where
  * maximum generality is desired.
  *
- * <p><i>Bags</i> or <i>multisets</i> (unordered collections that may contain
+ * <p><i>Bags</i> or <i>multisets（多重性）</i> (unordered collections that may contain
  * duplicate elements) should implement this interface directly.
  *
  * <p>All general-purpose <tt>Collection</tt> implementation classes (which
@@ -47,28 +47,28 @@ import java.util.stream.StreamSupport;
  * subinterfaces) should provide two "standard" constructors: a void (no
  * arguments) constructor, which creates an empty collection, and a
  * constructor with a single argument of type <tt>Collection</tt>, which
- * creates a new collection with the same elements as its argument.  In
+ * creates a new collection with the same elements as its argument（）.  In
  * effect, the latter constructor allows the user to copy any collection,
  * producing an equivalent collection of the desired implementation type.
- * There is no way to enforce this convention (as interfaces cannot contain
+ * There is no way to enforce（实施） this convention (as interfaces cannot contain
  * constructors) but all of the general-purpose <tt>Collection</tt>
  * implementations in the Java platform libraries comply.
  *
- * <p>The "destructive" methods contained in this interface, that is, the
+ * <p>The "destructive"（破坏性的） methods contained in this interface, that is, the
  * methods that modify the collection on which they operate, are specified to
  * throw <tt>UnsupportedOperationException</tt> if this collection does not
  * support the operation.  If this is the case, these methods may, but are not
  * required to, throw an <tt>UnsupportedOperationException</tt> if the
- * invocation would have no effect on the collection.  For example, invoking
+ * invocation（引用点） would have no effect on the collection.  For example, invoking
  * the {@link #addAll(Collection)} method on an unmodifiable collection may,
  * but is not required to, throw the exception if the collection to be added
  * is empty.
  *
- * <p><a name="optional-restrictions">
+ * <p><a name="optional-restrictions（限制）">
  * Some collection implementations have restrictions on the elements that
- * they may contain.</a>  For example, some implementations prohibit null elements,
+ * they may contain.</a>  For example, some implementations prohibit（禁止） null elements,
  * and some have restrictions on the types of their elements.  Attempting to
- * add an ineligible element throws an unchecked exception, typically
+ * add an ineligible（不合适的） element throws an unchecked exception, typically
  * <tt>NullPointerException</tt> or <tt>ClassCastException</tt>.  Attempting
  * to query the presence of an ineligible element may throw an exception,
  * or it may simply return false; some implementations will exhibit the former
@@ -76,11 +76,11 @@ import java.util.stream.StreamSupport;
  * operation on an ineligible element whose completion would not result in
  * the insertion of an ineligible element into the collection may throw an
  * exception or it may succeed, at the option of the implementation.
- * Such exceptions are marked as "optional" in the specification for this
+ * Such exceptions are marked as "optional（可选的）" in the specification for this
  * interface.
  *
- * <p>It is up to each collection to determine its own synchronization
- * policy.  In the absence of a stronger guarantee by the
+ * <p>It is up to each collection to determine（确定） its own synchronization
+ * policy（同步策略）.  In the absence of a stronger guarantee by the
  * implementation, undefined behavior may result from the invocation
  * of any method on a collection that is being mutated by another
  * thread; this includes direct invocations, passing the collection to
@@ -93,7 +93,7 @@ import java.util.stream.StreamSupport;
  * method says: "returns <tt>true</tt> if and only if this collection
  * contains at least one element <tt>e</tt> such that
  * <tt>(o==null ? e==null : o.equals(e))</tt>."  This specification should
- * <i>not</i> be construed to imply that invoking <tt>Collection.contains</tt>
+ * <i>not</i> be construed（被解释的） to imply that invoking <tt>Collection.contains</tt>
  * with a non-null argument <tt>o</tt> will cause <tt>o.equals(e)</tt> to be
  * invoked for any element <tt>e</tt>.  Implementations are free to implement
  * optimizations whereby the <tt>equals</tt> invocation is avoided, for
@@ -104,7 +104,7 @@ import java.util.stream.StreamSupport;
  * the specified behavior of underlying {@link Object} methods wherever the
  * implementor deems it appropriate.
  *
- * <p>Some collection operations which perform recursive traversal of the
+ * <p>Some collection operations which perform recursive（递归） traversal（遍历） of the
  * collection may fail with an exception for self-referential instances where
  * the collection directly or indirectly contains itself. This includes the
  * {@code clone()}, {@code equals()}, {@code hashCode()} and {@code toString()}
@@ -116,7 +116,7 @@ import java.util.stream.StreamSupport;
  * Java Collections Framework</a>.
  *
  * @implSpec
- * The default method implementations (inherited or otherwise) do not apply any
+ * The default method implementations (inherited（继承） or otherwise) do not apply any
  * synchronization protocol.  If a {@code Collection} implementation has a
  * specific synchronization protocol, then it must override default
  * implementations to apply that protocol.
@@ -145,6 +145,7 @@ public interface Collection<E> extends Iterable<E> {
     // Query Operations
 
     /**
+     * 返回集合元素的大小
      * Returns the number of elements in this collection.  If this collection
      * contains more than <tt>Integer.MAX_VALUE</tt> elements, returns
      * <tt>Integer.MAX_VALUE</tt>.
@@ -161,12 +162,13 @@ public interface Collection<E> extends Iterable<E> {
     boolean isEmpty();
 
     /**
+     * 返回是否包含的特定元素
      * Returns <tt>true</tt> if this collection contains the specified element.
      * More formally, returns <tt>true</tt> if and only if this collection
      * contains at least one element <tt>e</tt> such that
      * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>.
      *
-     * @param o element whose presence in this collection is to be tested
+     * @param o element whose presence（存在） in this collection is to be tested
      * @return <tt>true</tt> if this collection contains the specified
      *         element
      * @throws ClassCastException if the type of the specified element
@@ -180,7 +182,7 @@ public interface Collection<E> extends Iterable<E> {
 
     /**
      * Returns an iterator over the elements in this collection.  There are no
-     * guarantees concerning the order in which the elements are returned
+     * guarantees（保证） concerning the order in which the elements are returned
      * (unless this collection is an instance of some class that provides a
      * guarantee).
      *
@@ -189,13 +191,13 @@ public interface Collection<E> extends Iterable<E> {
     Iterator<E> iterator();
 
     /**
-     * Returns an array containing all of the elements in this collection.
-     * If this collection makes any guarantees as to what order its elements
+     * Returns an array（数组） containing all of the elements in this collection.
+     * If this collection makes any guarantees（保证） as to what order its elements
      * are returned by its iterator, this method must return the elements in
      * the same order.
      *
      * <p>The returned array will be "safe" in that no references to it are
-     * maintained by this collection.  (In other words, this method must
+     * maintained（保持） by this collection.  (In other words, this method must
      * allocate a new array even if this collection is backed by an array).
      * The caller is thus free to modify the returned array.
      *
@@ -208,7 +210,7 @@ public interface Collection<E> extends Iterable<E> {
 
     /**
      * Returns an array containing all of the elements in this collection;
-     * the runtime type of the returned array is that of the specified array.
+     * the runtime（运行） type of the returned array is that of the specified array.
      * If the collection fits in the specified array, it is returned therein.
      * Otherwise, a new array is allocated with the runtime type of the
      * specified array and the size of this collection.
@@ -224,9 +226,9 @@ public interface Collection<E> extends Iterable<E> {
      * are returned by its iterator, this method must return the elements in
      * the same order.
      *
-     * <p>Like the {@link #toArray()} method, this method acts as bridge between
+     * <p>Like the {@link #toArray()} method, this method acts as bridge（桥接） between
      * array-based and collection-based APIs.  Further, this method allows
-     * precise control over the runtime type of the output array, and may,
+     * precise（准确的） control over the runtime type of the output array, and may,
      * under certain circumstances, be used to save allocation costs.
      *
      * <p>Suppose <tt>x</tt> is a collection known to contain only strings.
@@ -236,7 +238,7 @@ public interface Collection<E> extends Iterable<E> {
      * <pre>
      *     String[] y = x.toArray(new String[0]);</pre>
      *
-     * Note that <tt>toArray(new Object[0])</tt> is identical in function to
+     * Note that <tt>toArray(new Object[0])</tt> is identical（完全相同的） in function to
      * <tt>toArray()</tt>.
      *
      * @param <T> the runtime type of the array to contain the collection
@@ -257,19 +259,19 @@ public interface Collection<E> extends Iterable<E> {
      * Ensures that this collection contains the specified element (optional
      * operation).  Returns <tt>true</tt> if this collection changed as a
      * result of the call.  (Returns <tt>false</tt> if this collection does
-     * not permit duplicates and already contains the specified element.)<p>
+     * not permit duplicates（重复的） and already contains the specified element.)<p>
      *
-     * Collections that support this operation may place limitations on what
+     * Collections that support this operation may place limitations（限制的） on what
      * elements may be added to this collection.  In particular, some
      * collections will refuse to add <tt>null</tt> elements, and others will
      * impose restrictions on the type of elements that may be added.
      * Collection classes should clearly specify in their documentation any
      * restrictions on what elements may be added.<p>
      *
-     * If a collection refuses to add a particular element for any reason
+     * If a collection refuses to add a particular（特定的） element for any reason
      * other than that it already contains the element, it <i>must</i> throw
      * an exception (rather than returning <tt>false</tt>).  This preserves
-     * the invariant that a collection always contains the specified element
+     * the invariant（不变量） that a collection always contains the specified element
      * after this call returns.
      *
      * @param e element whose presence in this collection is to be ensured
@@ -295,12 +297,12 @@ public interface Collection<E> extends Iterable<E> {
      * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>, if
      * this collection contains one or more such elements.  Returns
      * <tt>true</tt> if this collection contained the specified element (or
-     * equivalently, if this collection changed as a result of the call).
+     * equivalently（等效）, if this collection changed as a result of the call).
      *
      * @param o element to be removed from this collection, if present
      * @return <tt>true</tt> if an element was removed as a result of this call
      * @throws ClassCastException if the type of the specified element
-     *         is incompatible with this collection
+     *         is incompatible（互不相容） with this collection
      *         (<a href="#optional-restrictions">optional</a>)
      * @throws NullPointerException if the specified element is null and this
      *         collection does not permit null elements
@@ -335,7 +337,7 @@ public interface Collection<E> extends Iterable<E> {
 
     /**
      * Adds all of the elements in the specified collection to this collection
-     * (optional operation).  The behavior of this operation is undefined if
+     * (optional operation).  The behavior of this operation is undefined（不明确的） if
      * the specified collection is modified while the operation is in progress.
      * (This implies that the behavior of this call is undefined if the
      * specified collection is this collection, and this collection is
@@ -397,7 +399,7 @@ public interface Collection<E> extends Iterable<E> {
      * thrown on the first matching element.
      *
      * @param filter a predicate which returns {@code true} for elements to be
-     *        removed
+     *        removed（满足过滤器条件的被删除）
      * @return {@code true} if any elements were removed
      * @throws NullPointerException if the specified filter is null
      * @throws UnsupportedOperationException if elements cannot be removed
@@ -406,6 +408,7 @@ public interface Collection<E> extends Iterable<E> {
      *         supported.
      * @since 1.8
      */
+    // 默认权限
     default boolean removeIf(Predicate<? super E> filter) {
         Objects.requireNonNull(filter);
         boolean removed = false;
@@ -420,7 +423,7 @@ public interface Collection<E> extends Iterable<E> {
     }
 
     /**
-     * Retains only the elements in this collection that are contained in the
+     * Retains（保持） only the elements in this collection that are contained in the
      * specified collection (optional operation).  In other words, removes from
      * this collection all of its elements that are not contained in the
      * specified collection.
@@ -458,7 +461,7 @@ public interface Collection<E> extends Iterable<E> {
     /**
      * Compares the specified object with this collection for equality. <p>
      *
-     * While the <tt>Collection</tt> interface adds no stipulations to the
+     * While the <tt>Collection</tt> interface adds no stipulations（规定） to the
      * general contract for the <tt>Object.equals</tt>, programmers who
      * implement the <tt>Collection</tt> interface "directly" (in other words,
      * create a class that is a <tt>Collection</tt> but is not a <tt>Set</tt>
@@ -470,7 +473,7 @@ public interface Collection<E> extends Iterable<E> {
      * <tt>Set</tt> interfaces mandate such value comparisons.)<p>
      *
      * The general contract for the <tt>Object.equals</tt> method states that
-     * equals must be symmetric (in other words, <tt>a.equals(b)</tt> if and
+     * equals must be symmetric（对称的） (in other words, <tt>a.equals(b)</tt> if and
      * only if <tt>b.equals(a)</tt>).  The contracts for <tt>List.equals</tt>
      * and <tt>Set.equals</tt> state that lists are only equal to other lists,
      * and sets to other sets.  Thus, a custom <tt>equals</tt> method for a
@@ -480,6 +483,7 @@ public interface Collection<E> extends Iterable<E> {
      * to write a class that correctly implements both the <tt>Set</tt> and
      * <tt>List</tt> interfaces.)
      *
+     *需要比较的对象
      * @param o object to be compared for equality with this collection
      * @return <tt>true</tt> if the specified object is equal to this
      * collection
@@ -492,7 +496,7 @@ public interface Collection<E> extends Iterable<E> {
 
     /**
      * Returns the hash code value for this collection.  While the
-     * <tt>Collection</tt> interface adds no stipulations to the general
+     * <tt>Collection</tt> interface adds no stipulations（规定） to the general
      * contract for the <tt>Object.hashCode</tt> method, programmers should
      * take note that any class that overrides the <tt>Object.equals</tt>
      * method must also override the <tt>Object.hashCode</tt> method in order
@@ -508,14 +512,16 @@ public interface Collection<E> extends Iterable<E> {
     int hashCode();
 
     /**
-     * Creates a {@link Spliterator} over the elements in this collection.
+     *
+     * JDK1.8引入的新特性
+     * Creates a {@link Spliterator}（可分割的迭代器） over the elements in this collection.
      *
      * Implementations should document characteristic values reported by the
      * spliterator.  Such characteristic values are not required to be reported
      * if the spliterator reports {@link Spliterator#SIZED} and this collection
      * contains no elements.
      *
-     * <p>The default implementation should be overridden by subclasses that
+     * <p>The default implementation should be overridden by subclasses（子类实现） that
      * can return a more efficient spliterator.  In order to
      * preserve expected laziness behavior for the {@link #stream()} and
      * {@link #parallelStream()}} methods, spliterators should either have the
@@ -530,7 +536,7 @@ public interface Collection<E> extends Iterable<E> {
      *     Stream<E> s = StreamSupport.stream(() -> spliterator(), spliteratorCharacteristics)
      * }</pre>
      * <p>These requirements ensure that streams produced by the
-     * {@link #stream()} and {@link #parallelStream()} methods will reflect the
+     * {@link #stream()} and {@link #parallelStream()} methods will reflect（反映） the
      * contents of the collection as of initiation of the terminal stream
      * operation.
      *
@@ -563,11 +569,11 @@ public interface Collection<E> extends Iterable<E> {
     }
 
     /**
-     * Returns a sequential {@code Stream} with this collection as its source.
+     * Returns a sequential（连续的） {@code Stream} with this collection as its source.
      *
      * <p>This method should be overridden when the {@link #spliterator()}
-     * method cannot return a spliterator that is {@code IMMUTABLE},
-     * {@code CONCURRENT}, or <em>late-binding</em>. (See {@link #spliterator()}
+     * method cannot return a spliterator that is {@code IMMUTABLE}（不可变）,
+     * {@code CONCURRENT}（并发）, or <em>late-binding</em>. (See {@link #spliterator()}
      * for details.)
      *
      * @implSpec
@@ -578,11 +584,13 @@ public interface Collection<E> extends Iterable<E> {
      * @since 1.8
      */
     default Stream<E> stream() {
+
+        // 接收一个spliterator参数以及是否是并发判断,主要的数据保存在spliterator中
         return StreamSupport.stream(spliterator(), false);
     }
 
     /**
-     * Returns a possibly parallel {@code Stream} with this collection as its
+     * Returns a possibly parallel（平行的） {@code Stream} with this collection as its
      * source.  It is allowable for this method to return a sequential stream.
      *
      * <p>This method should be overridden when the {@link #spliterator()}

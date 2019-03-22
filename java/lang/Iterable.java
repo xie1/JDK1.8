@@ -90,7 +90,7 @@ public interface Iterable<T> {
      * @implNote
      * The default implementation should usually be overridden.  The
      * spliterator returned by the default implementation has poor splitting
-     * capabilities, is unsized, and does not report any spliterator
+     * capabilities（极快的能力）, is unsized（不定长度）, and does not report any spliterator
      * characteristics. Implementing classes can nearly always provide a
      * better implementation.
      *
