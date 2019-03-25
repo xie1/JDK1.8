@@ -28,15 +28,15 @@ package java.util;
 /**
  * A collection that contains no duplicate elements.  More formally, sets
  * contain no pair of elements <code>e1</code> and <code>e2</code> such that
- * <code>e1.equals(e2)</code>, and at most one null element.  As implied by
+ * <code>e1.equals(e2)</code>, and at most one null element(只有一个空元素).  As implied by
  * its name, this interface models the mathematical <i>set</i> abstraction.
  *
- * <p>The <tt>Set</tt> interface places additional stipulations, beyond those
- * inherited from the <tt>Collection</tt> interface, on the contracts of all
+ * <p>The <tt>Set</tt> interface places additional stipulations（规定）, beyond those
+ * inherited（继承） from the <tt>Collection</tt> interface, on the contracts of all
  * constructors and on the contracts of the <tt>add</tt>, <tt>equals</tt> and
  * <tt>hashCode</tt> methods.  Declarations for other inherited methods are
  * also included here for convenience.  (The specifications accompanying these
- * declarations have been tailored to the <tt>Set</tt> interface, but they do
+ * declarations（声明） have been tailored to the <tt>Set</tt> interface, but they do
  * not contain any additional stipulations.)
  *
  * <p>The additional stipulation on constructors is, not surprisingly,
@@ -46,10 +46,10 @@ package java.util;
  * <p>Note: Great care must be exercised if mutable objects are used as set
  * elements.  The behavior of a set is not specified if the value of an object
  * is changed in a manner that affects <tt>equals</tt> comparisons while the
- * object is an element in the set.  A special case of this prohibition is
+ * object is an element in the set.  A special case of this prohibition（禁止） is
  * that it is not permissible for a set to contain itself as an element.
  *
- * <p>Some set implementations have restrictions on the elements that
+ * <p>Some set implementations have restrictions（限制） on the elements that
  * they may contain.  For example, some implementations prohibit null elements,
  * and some have restrictions on the types of their elements.  Attempting to
  * add an ineligible element throws an unchecked exception, typically
@@ -76,7 +76,7 @@ package java.util;
  * @see SortedSet
  * @see HashSet
  * @see TreeSet
- * @see AbstractSet
+ * @see AbstractSet（抽象Set）
  * @see Collections#singleton(java.lang.Object)
  * @see Collections#EMPTY_SET
  * @since 1.2
@@ -107,7 +107,7 @@ public interface Set<E> extends Collection<E> {
      * contains an element <tt>e</tt> such that
      * <tt>(o==null&nbsp;?&nbsp;e==null&nbsp;:&nbsp;o.equals(e))</tt>.
      *
-     * @param o element whose presence in this set is to be tested
+     * @param o element whose presence（存在） in this set is to be tested
      * @return <tt>true</tt> if this set contains the specified element
      * @throws ClassCastException if the type of the specified element
      *         is incompatible with this set
@@ -134,7 +134,7 @@ public interface Set<E> extends Collection<E> {
      * elements in the same order.
      *
      * <p>The returned array will be "safe" in that no references to it
-     * are maintained by this set.  (In other words, this method must
+     * are maintained（维护） by this set.  (In other words, this method must
      * allocate a new array even if this set is backed by an array).
      * The caller is thus free to modify the returned array.
      *
@@ -163,10 +163,11 @@ public interface Set<E> extends Collection<E> {
      * are returned by its iterator, this method must return the elements
      * in the same order.
      *
+     * 这方法提供了数组和集合之间的转换
      * <p>Like the {@link #toArray()} method, this method acts as bridge between
      * array-based and collection-based APIs.  Further, this method allows
      * precise control over the runtime type of the output array, and may,
-     * under certain circumstances, be used to save allocation costs.
+     * under certain circumstances（市场环境）, be used to save allocation costs.
      *
      * <p>Suppose <tt>x</tt> is a set known to contain only strings.
      * The following code can be used to dump the set into a newly allocated
@@ -201,9 +202,9 @@ public interface Set<E> extends Collection<E> {
      * If this set already contains the element, the call leaves the set
      * unchanged and returns <tt>false</tt>.  In combination with the
      * restriction on constructors, this ensures that sets never contain
-     * duplicate elements.
+     * duplicate elements(新增不重复的元素).
      *
-     * <p>The stipulation above does not imply that sets must accept all
+     * <p>The stipulation（合同项目） above does not imply that sets must accept all
      * elements; sets may refuse to add any particular element, including
      * <tt>null</tt>, and throw an exception, as described in the
      * specification for {@link Collection#add Collection.add}.
@@ -297,7 +298,8 @@ public interface Set<E> extends Collection<E> {
     boolean addAll(Collection<? extends E> c);
 
     /**
-     * Retains only the elements in this set that are contained in the
+     * 保留集合中的元素
+     * Retains（保留） only the elements in this set that are contained in the
      * specified collection (optional operation).  In other words, removes
      * from this set all of its elements that are not contained in the
      * specified collection.  If the specified collection is also a set, this
@@ -384,6 +386,8 @@ public interface Set<E> extends Collection<E> {
     int hashCode();
 
     /**
+     *
+     * 并行迭代器
      * Creates a {@code Spliterator} over the elements in this set.
      *
      * <p>The {@code Spliterator} reports {@link Spliterator#DISTINCT}.
