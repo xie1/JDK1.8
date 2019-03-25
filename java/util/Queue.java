@@ -38,12 +38,12 @@ package java.util;
 /**
  * A collection designed for holding elements prior to processing.
  * Besides basic {@link java.util.Collection Collection} operations,
- * queues provide additional insertion, extraction, and inspection
+ * queues provide additional insertion, extraction（取出）, and inspection
  * operations.  Each of these methods exists in two forms: one throws
  * an exception if the operation fails, the other returns a special
  * value (either {@code null} or {@code false}, depending on the
  * operation).  The latter form of the insert operation is designed
- * specifically for use with capacity-restricted {@code Queue}
+ * specifically for use with capacity-restricted（容量限制） {@code Queue}
  * implementations; in most implementations, insert operations cannot
  * fail.
  *
@@ -72,14 +72,14 @@ package java.util;
  * </table>
  *
  * <p>Queues typically, but do not necessarily, order elements in a
- * FIFO (first-in-first-out) manner.  Among the exceptions are
+ * FIFO (first-in-first-out)manner 先进先出方式 .  Among the exceptions are
  * priority queues, which order elements according to a supplied
- * comparator, or the elements' natural ordering, and LIFO queues (or
+ * comparator(比较器), or the elements' natural ordering, and LIFO queues (or 例如栈
  * stacks) which order the elements LIFO (last-in-first-out).
  * Whatever the ordering used, the <em>head</em> of the queue is that
  * element which would be removed by a call to {@link #remove() } or
  * {@link #poll()}.  In a FIFO queue, all new elements are inserted at
- * the <em>tail</em> of the queue. Other kinds of queues may use
+ * the <em>tail（尾巴）</em> of the queue. Other kinds of queues may use
  * different placement rules.  Every {@code Queue} implementation
  * must specify its ordering properties.
  *
@@ -103,10 +103,10 @@ package java.util;
  * <p>The {@link #element()} and {@link #peek()} methods return, but do
  * not remove, the head of the queue.
  *
- * <p>The {@code Queue} interface does not define the <i>blocking queue
- * methods</i>, which are common in concurrent programming.  These methods,
+ * <p>The {@code Queue} interface does not define the <i>blocking（阻塞） queue
+ * methods</i>, which are common in concurrent（并发） programming.  These methods,
  * which wait for elements to appear or for space to become available, are
- * defined in the {@link java.util.concurrent.BlockingQueue} interface, which
+ * defined in the {@link java.util.concurrent.BlockingQueue}阻塞队列 interface, which
  * extends this interface.
  *
  * <p>{@code Queue} implementations generally do not allow insertion
@@ -144,7 +144,7 @@ package java.util;
 public interface Queue<E> extends Collection<E> {
     /**
      * Inserts the specified element into this queue if it is possible to do so
-     * immediately without violating capacity restrictions, returning
+     * immediately without violating（违背） capacity restrictions（容量限制）, returning
      * {@code true} upon success and throwing an {@code IllegalStateException}
      * if no space is currently available.
      *
@@ -165,7 +165,7 @@ public interface Queue<E> extends Collection<E> {
      * Inserts the specified element into this queue if it is possible to do
      * so immediately without violating capacity restrictions.
      * When using a capacity-restricted queue, this method is generally
-     * preferable to {@link #add}, which can fail to insert an element only
+     * preferable（更好的） to {@link #add}, which can fail to insert an element only
      * by throwing an exception.
      *
      * @param e the element to add
@@ -181,11 +181,11 @@ public interface Queue<E> extends Collection<E> {
     boolean offer(E e);
 
     /**
-     * Retrieves and removes the head of this queue.  This method differs
+     * Retrieves(检索) and removes the head of this queue.  This method differs
      * from {@link #poll poll} only in that it throws an exception if this
      * queue is empty.
      *
-     * @return the head of this queue
+     * @return the head of this queue (队列的头数据)FIFO,如果为空会抛出异常
      * @throws NoSuchElementException if this queue is empty
      */
     E remove();
