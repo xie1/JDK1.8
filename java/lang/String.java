@@ -1013,6 +1013,7 @@ public final class String
             String anotherString = (String)anObject;
             int n = value.length;
             // 默认的数量相同
+            // 比较的值
             if (n == anotherString.value.length) {
                 char v1[] = value;
                 char v2[] = anotherString.value;
